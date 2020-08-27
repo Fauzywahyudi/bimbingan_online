@@ -1,1 +1,0 @@
-enum PageLogin { isMahasiswa, isDosen }

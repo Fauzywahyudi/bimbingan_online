@@ -1,4 +1,5 @@
 import 'package:bimbingan_online/views/login.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,8 +11,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Bimbingan Online',
+      navigatorObservers: [
+        BotToastNavigatorObserver()
+      ], //Register route observer
+      builder: BotToastInit(),
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepPurple,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Login(),
