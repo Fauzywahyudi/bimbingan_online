@@ -1,4 +1,4 @@
-import 'package:bimbingan_online/models/page_login.dart';
+import 'package:bimbingan_online/models/page_aktor.dart';
 import 'package:bimbingan_online/views/register.dart';
 import 'package:flutter/material.dart';
 import 'package:wave/config.dart';
@@ -12,20 +12,20 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   var _tecNim = TextEditingController();
   var _tecPass = TextEditingController();
-  bool get _isMahasiswa => _pageLogin == PageLogin.isMahasiswa ? true : false;
-  PageLogin _pageLogin = PageLogin.isMahasiswa;
+  bool get _isMahasiswa => _pageLogin == PageAktor.isMahasiswa ? true : false;
+  PageAktor _pageLogin = PageAktor.isMahasiswa;
 
-  void _changePage(PageLogin page) {
-    if (page == PageLogin.isMahasiswa) {
+  void _changePage(PageAktor page) {
+    if (page == PageAktor.isMahasiswa) {
       if (!_isMahasiswa) {
         setState(() {
-          _pageLogin = PageLogin.isMahasiswa;
+          _pageLogin = PageAktor.isMahasiswa;
         });
       }
     } else {
       if (_isMahasiswa) {
         setState(() {
-          _pageLogin = PageLogin.isDosen;
+          _pageLogin = PageAktor.isDosen;
         });
       }
     }
@@ -174,7 +174,7 @@ class _LoginState extends State<Login> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(40)),
                             ),
-                            onPressed: () => _changePage(PageLogin.isMahasiswa),
+                            onPressed: () => _changePage(PageAktor.isMahasiswa),
                           ),
                         ),
                         SizedBox(
@@ -191,7 +191,7 @@ class _LoginState extends State<Login> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(40)),
                             ),
-                            onPressed: () => _changePage(PageLogin.isDosen),
+                            onPressed: () => _changePage(PageAktor.isDosen),
                           ),
                         ),
                         SizedBox(
@@ -211,7 +211,7 @@ class _LoginState extends State<Login> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => Register(
-                                      pageLogin: PageLogin.isMahasiswa,
+                                      pageLogin: PageAktor.isMahasiswa,
                                     ),
                                   ),
                                 ),

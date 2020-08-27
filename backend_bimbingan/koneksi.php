@@ -2,6 +2,6 @@
 $server = "localhost";
 $user   = "root";
 $pass   = "";
-$db     = "db_produk";
+$db     = "db_bimbingan_online";
 
 $kon = mysqli_connect($server, $user, $pass, $db);
