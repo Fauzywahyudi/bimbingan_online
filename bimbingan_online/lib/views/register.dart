@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:bimbingan_online/models/page_aktor.dart';
 import 'package:bimbingan_online/utils/notifikasi.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +6,7 @@ import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 import 'package:http/http.dart' as http;
 import 'package:bimbingan_online/utils/link.dart' as link;
+import 'package:bimbingan_online/utils/assets.dart';
 
 class Register extends StatefulWidget {
   final PageAktor pageLogin;
@@ -22,6 +22,13 @@ class _RegisterState extends State<Register> {
   var _tecNama = TextEditingController();
   var _tecNohp = TextEditingController();
   var _tecAlamat = TextEditingController();
+
+  var _focNim = FocusNode();
+  var _focPass = FocusNode();
+  var _focNama = FocusNode();
+  var _focNohp = FocusNode();
+  var _focAlamat = FocusNode();
+
   PageAktor _pageLogin;
   bool get _isMahasiswa => _pageLogin == PageAktor.isMahasiswa ? true : false;
   String _jenisKelamin = "";
@@ -32,11 +39,16 @@ class _RegisterState extends State<Register> {
     super.initState();
   }
 
+  void _back() {
+    Navigator.pop(context);
+    print('keluar');
+  }
+
   bool _validasiMahasiswa() {
     if (_tecNim.text.isEmpty || _tecNim.text.length != 8) return false;
     if (_tecPass.text.isEmpty) return false;
     if (_tecNama.text.isEmpty) return false;
-    if (_tecNohp.text.isEmpty) return false;
+    if (_tecNohp.text.isEmpty || _tecNohp.text.length < 10) return false;
     if (_tecAlamat.text.isEmpty) return false;
     if (_jenisKelamin.isEmpty) return false;
     return true;
@@ -48,9 +60,9 @@ class _RegisterState extends State<Register> {
         "aktor": _isMahasiswa ? "Mahasiswa" : "Dosen",
         "nim": _tecNim.text,
         "pass": _tecPass.text,
-        "nama": _tecNama.text,
+        "nama": _tecNama.text.toUpperCase(),
         "jk": _jenisKelamin,
-        "nohp": _tecNohp.text,
+        "nohp": "+62" + _tecNohp.text,
         "alamat": _tecAlamat.text,
       });
       final response = await json.decode(result.body);
@@ -58,7 +70,8 @@ class _RegisterState extends State<Register> {
       String pesan = response['message'];
       print(pesan);
       if (value == 1) {
-        messageSuccess(context, pesan);
+        messageSuccess(
+            context, pesan + "\nMohon tunggu konfirmasi\nKetua Prodi anda!");
         Navigator.pop(context);
       } else if (value == 2) {
         messageInfo(context, pesan);
@@ -68,6 +81,8 @@ class _RegisterState extends State<Register> {
     } else {
       if (_tecNim.text.length != 8 && _tecNim.text.isNotEmpty) {
         messageInfo(context, "NIM tidak valid!");
+      } else if (_tecNohp.text.length < 10 && _tecNohp.text.isNotEmpty) {
+        messageInfo(context, "No. HP tidak valid!");
       } else {
         messageInfo(context, "Harap Lengkapi Data!");
       }
@@ -125,14 +140,19 @@ class _RegisterState extends State<Register> {
                           borderRadius: BorderRadius.all(Radius.circular(40))),
                       child: TextField(
                         controller: _tecNim,
+                        focusNode: _focNim,
                         keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.next,
+                        onSubmitted: (v) {
+                          FocusScope.of(context).requestFocus(_focPass);
+                        },
                         decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.person,
-                              color: Colors.black26,
+                              color: colHint,
                             ),
                             hintText: "${_isMahasiswa ? "NIM" : "NIDN"}",
-                            hintStyle: TextStyle(color: Colors.black26),
+                            hintStyle: textHint,
                             filled: true,
                             fillColor: Colors.white,
                             border: OutlineInputBorder(
@@ -151,16 +171,19 @@ class _RegisterState extends State<Register> {
                           borderRadius: BorderRadius.all(Radius.circular(40))),
                       child: TextField(
                         controller: _tecPass,
+                        focusNode: _focPass,
                         obscureText: true,
+                        textInputAction: TextInputAction.next,
+                        onSubmitted: (v) {
+                          FocusScope.of(context).requestFocus(_focNama);
+                        },
                         decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.lock,
-                              color: Colors.black26,
+                              color: colHint,
                             ),
                             hintText: "Password",
-                            hintStyle: TextStyle(
-                              color: Colors.black26,
-                            ),
+                            hintStyle: textHint,
                             filled: true,
                             fillColor: Colors.white,
                             border: OutlineInputBorder(
@@ -179,15 +202,19 @@ class _RegisterState extends State<Register> {
                           borderRadius: BorderRadius.all(Radius.circular(40))),
                       child: TextField(
                         controller: _tecNama,
+                        focusNode: _focNama,
+                        textInputAction: TextInputAction.next,
+                        textCapitalization: TextCapitalization.words,
+                        onSubmitted: (v) {
+                          FocusScope.of(context).requestFocus(_focNohp);
+                        },
                         decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.person,
-                              color: Colors.black26,
+                              color: colHint,
                             ),
                             hintText: "Nama Mahasiswa",
-                            hintStyle: TextStyle(
-                              color: Colors.black26,
-                            ),
+                            hintStyle: textHint,
                             filled: true,
                             fillColor: Colors.white,
                             border: OutlineInputBorder(
@@ -217,7 +244,7 @@ class _RegisterState extends State<Register> {
                                   ),
                                   child: Icon(
                                     Icons.wc,
-                                    color: Colors.black26,
+                                    color: colHint,
                                   ),
                                 ),
                                 Padding(
@@ -227,8 +254,7 @@ class _RegisterState extends State<Register> {
                                   ),
                                   child: Text(
                                     "Jenis Kelamin",
-                                    style: TextStyle(
-                                        color: Colors.black26, fontSize: 17),
+                                    style: textHint.copyWith(fontSize: 17),
                                   ),
                                 ),
                                 Expanded(
@@ -252,9 +278,9 @@ class _RegisterState extends State<Register> {
                                 ),
                                 Text(
                                   "Laki-laki",
-                                  style: TextStyle(
-                                      color: Colors.black54, fontSize: 17),
+                                  style: textValue.copyWith(fontSize: 17),
                                 ),
+                                Expanded(child: Container()),
                                 Radio(
                                   groupValue: _jenisKelamin,
                                   value: "Perempuan",
@@ -266,8 +292,7 @@ class _RegisterState extends State<Register> {
                                 ),
                                 Text(
                                   "Perempuan",
-                                  style: TextStyle(
-                                      color: Colors.black54, fontSize: 17),
+                                  style: textValue.copyWith(fontSize: 17),
                                 ),
                                 SizedBox(
                                   width: 30,
@@ -283,16 +308,27 @@ class _RegisterState extends State<Register> {
                           borderRadius: BorderRadius.all(Radius.circular(40))),
                       child: TextField(
                         controller: _tecNohp,
+                        focusNode: _focNohp,
                         keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.next,
+                        onSubmitted: (v) {
+                          FocusScope.of(context).requestFocus(_focAlamat);
+                        },
+                        onChanged: (v) {
+                          if (v.length == 1 && v.contains("0")) {
+                            print("suai");
+                            _tecNohp.text = "";
+                          }
+                        },
                         decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.call,
-                              color: Colors.black26,
+                              color: colHint,
                             ),
+                            prefixText: '+62 ',
+                            prefixStyle: textValue,
                             hintText: "No. HP",
-                            hintStyle: TextStyle(
-                              color: Colors.black26,
-                            ),
+                            hintStyle: textHint,
                             filled: true,
                             fillColor: Colors.white,
                             border: OutlineInputBorder(
@@ -311,17 +347,17 @@ class _RegisterState extends State<Register> {
                           borderRadius: BorderRadius.all(Radius.circular(40))),
                       child: TextField(
                         controller: _tecAlamat,
+                        focusNode: _focAlamat,
                         minLines: 1,
                         maxLines: 3,
+                        textCapitalization: TextCapitalization.words,
                         decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.home,
-                              color: Colors.black26,
+                              color: colHint,
                             ),
                             hintText: "Alamat",
-                            hintStyle: TextStyle(
-                              color: Colors.black26,
-                            ),
+                            hintStyle: textHint,
                             filled: true,
                             fillColor: Colors.white,
                             border: OutlineInputBorder(

@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Bimbingan Online',
+      debugShowCheckedModeBanner: false,
       navigatorObservers: [
         BotToastNavigatorObserver()
       ], //Register route observer
