@@ -35,6 +35,7 @@ dependencies:
   bot_toast: ^3.0.3
   shared_preferences: ^0.5.10
   wave: ^0.0.8
+  awesome_dialog: ^1.2.0
 
 dev_dependencies:
   flutter_test:
