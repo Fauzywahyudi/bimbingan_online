@@ -91,10 +91,10 @@ class _LoginState extends State<Login> {
           _saveDataPrefDosen(value, dosen);
           pushReplacePage(context, HomeDosen(dosen: dosen));
         }
-        setState(() async {
-          _tecNim.text = "";
-          _tecPass.text = "";
-        });
+        // setState(() async {
+        //   _tecNim.text = "";
+        //   _tecPass.text = "";
+        // });
       } else if (value == 2) {
         messageInfo(context, pesan);
       } else {

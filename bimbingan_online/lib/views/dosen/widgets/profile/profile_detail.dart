@@ -1,4 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:bimbingan_online/models/shared_preferenced.dart';
+import 'package:bimbingan_online/utils/assets.dart';
+import 'package:bimbingan_online/views/login.dart';
+import 'package:line_icons/line_icons.dart';
 
 import '../../utils/constant.dart';
 import '../../widgets/profile_image.dart';
@@ -11,6 +16,26 @@ class ProfileDetail extends StatelessWidget {
 
   const ProfileDetail({Key key, this.nama, this.gelar, this.jabatan})
       : super(key: key);
+
+  void _logout(BuildContext context) async {
+    DataShared dataShared = DataShared();
+    await dataShared.logout();
+    pushReplacePage(context, Login());
+  }
+
+  void _dialogLogout(BuildContext context) async {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.INFO,
+      animType: AnimType.BOTTOMSLIDE,
+      title: 'Logout',
+      desc: 'Yakin untuk Logout',
+      btnCancelOnPress: () {},
+      btnOkOnPress: () {
+        _logout(context);
+      },
+    )..show();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,31 +57,19 @@ class ProfileDetail extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                // ProfileImage(
-                //   height: 60.0,
-                //   width: 60.0,
-                // ),
-                // SizedBox(
-                //   width: 15.0,
-                // ),
                 Column(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Container(
-                      child: Row(
-                        children: <Widget>[
-                          AutoSizeText(
-                            "$nama $gelar",
-                            maxLines: 1,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
+                    AutoSizeText(
+                      "$nama $gelar",
+                      maxLines: 2,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold),
                     ),
                     Text(
                       jabatan,
@@ -67,6 +80,17 @@ class ProfileDetail extends StatelessWidget {
                       ),
                     ),
                   ],
+                ),
+                ClipOval(
+                  child: Container(
+                    color: colDanger,
+                    child: IconButton(
+                      color: colLight,
+                      icon: Icon(LineIcons.power_off),
+                      onPressed: () => _dialogLogout(context),
+                      tooltip: "Logout",
+                    ),
+                  ),
                 ),
               ],
             ),

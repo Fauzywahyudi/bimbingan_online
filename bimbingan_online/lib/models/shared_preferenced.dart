@@ -48,6 +48,21 @@ class DataShared {
     return dosen;
   }
 
+  Future<Mahasiswa> getDataPrefMahasiswa() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    Mahasiswa mahasiswa;
+    int id = sharedPreferences.getInt("id");
+    String username = sharedPreferences.getString("username");
+    String nama = sharedPreferences.getString("nama");
+    String jk = sharedPreferences.getString("jk");
+    String jurusan = sharedPreferences.getString("jurusan");
+    String alamat = sharedPreferences.getString("alamat");
+    String nohp = sharedPreferences.getString("nohp");
+    mahasiswa = Mahasiswa(id, username, nama, jk, jurusan, alamat, nohp);
+
+    return mahasiswa;
+  }
+
   Future saveDataPrefDosen(int value, Dosen dosen) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setInt("value", value);
