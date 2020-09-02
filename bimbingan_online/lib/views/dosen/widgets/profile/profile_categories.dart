@@ -8,14 +8,17 @@ class ProfileCategories extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          for (Catg catg in listProfileCategories)
-            Category(
-              catg: catg,
-            )
-        ],
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            for (Catg catg in listProfileCategories)
+              Category(
+                catg: catg,
+              )
+          ],
+        ),
       ),
     );
   }
