@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 class ProfileDetail extends StatelessWidget {
   final nama;
   final gelar;
+  final jabatan;
 
-  const ProfileDetail({Key key, this.nama, this.gelar}) : super(key: key);
+  const ProfileDetail({Key key, this.nama, this.gelar, this.jabatan})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,7 @@ class ProfileDetail extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'A trendsetter',
+                      jabatan,
                       style: TextStyle(
                         color: Colors.white70,
                         fontSize: 13.0,

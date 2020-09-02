@@ -2,6 +2,7 @@ import 'package:bimbingan_online/models/dosen.dart';
 import 'package:bimbingan_online/models/shared_preferenced.dart';
 import 'package:bimbingan_online/utils/assets.dart';
 import 'package:bimbingan_online/views/dosen/pages/home_dosen.dart';
+import 'package:bimbingan_online/views/login.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -25,6 +26,8 @@ class _SplashScreenState extends State<SplashScreen> {
               dosen: dosen,
             ));
       }
+    } else {
+      pushReplacePage(context, Login());
     }
   }
 
