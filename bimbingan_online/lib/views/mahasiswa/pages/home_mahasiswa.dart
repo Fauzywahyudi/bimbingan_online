@@ -4,7 +4,6 @@ import 'package:bimbingan_online/models/mahasiswa.dart';
 import '../widgets/profile/profile_categories.dart';
 import '../widgets/profile/profile_detail.dart';
 import '../widgets/profile/profile_menu.dart';
-// import '../widgets/title_large.dart';
 import 'package:flutter/material.dart';
 
 class HomeMahasiswa extends StatefulWidget {
