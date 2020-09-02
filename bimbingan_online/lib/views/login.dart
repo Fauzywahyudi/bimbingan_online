@@ -1,8 +1,16 @@
+import 'dart:convert';
+
+import 'package:bimbingan_online/models/dosen.dart';
 import 'package:bimbingan_online/models/page_aktor.dart';
+import 'package:bimbingan_online/models/shared_preferenced.dart';
+import 'package:bimbingan_online/views/dosen/pages/home_dosen.dart';
 import 'package:bimbingan_online/views/register.dart';
 import 'package:flutter/material.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
+import 'package:http/http.dart' as http;
+import 'package:bimbingan_online/utils/link.dart' as link;
+import 'package:bimbingan_online/utils/assets.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -14,6 +22,11 @@ class _LoginState extends State<Login> {
   var _tecPass = TextEditingController();
   bool get _isMahasiswa => _pageLogin == PageAktor.isMahasiswa ? true : false;
   PageAktor _pageLogin = PageAktor.isMahasiswa;
+  DataShared _dataShared = DataShared();
+
+  Future _saveDataPref(int value, Dosen dosen) async {
+    await _dataShared.saveDataPrefDosen(value, dosen);
+  }
 
   void _changePage(PageAktor page) {
     if (page == PageAktor.isMahasiswa) {
@@ -29,6 +42,51 @@ class _LoginState extends State<Login> {
         });
       }
     }
+  }
+
+  void _login() async {
+    if (_validasi()) {
+      final result = await http.post(link.Link.server + "login.php", body: {
+        "aktor": _isMahasiswa ? "Mahasiswa" : "Dosen",
+        "username": _tecNim.text,
+        "password": _tecPass.text,
+      });
+      final response = await json.decode(result.body);
+      int value = response['value'];
+      String pesan = response['message'];
+
+      if (value == 1) {
+        final data = await json.decode(response['data']);
+        if (_isMahasiswa) {
+        } else {
+          Dosen dosen = Dosen(
+              int.parse(data['id_dosen']),
+              data['nidn_dosen'],
+              data['nama_dosen'],
+              data['gelar'],
+              data['jk'],
+              data['jabatan'],
+              data['alamat'],
+              data['nohp']);
+          setState(() async {
+            _saveDataPref(value, dosen);
+            _tecNim.text = "";
+            _tecPass.text = "";
+            pushReplacePage(context, HomeDosen());
+          });
+        }
+      } else if (value == 2) {
+        messageInfo(context, pesan);
+      } else {
+        messageInfo(context, pesan + "\nUsername atau Password Salah!");
+      }
+    }
+  }
+
+  bool _validasi() {
+    if (_tecNim.text.isEmpty) return false;
+    if (_tecPass.text.isEmpty) return false;
+    return true;
   }
 
   @override
@@ -63,7 +121,7 @@ class _LoginState extends State<Login> {
           ListView(
             children: <Widget>[
               Container(
-                height: 400,
+                height: 420,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -73,6 +131,8 @@ class _LoginState extends State<Login> {
                             color: Colors.white70,
                             fontWeight: FontWeight.bold,
                             fontSize: 28.0)),
+
+                    SizedBox(height: 50),
                     Card(
                       margin: EdgeInsets.only(left: 30, right: 30, top: 30),
                       elevation: 11,
@@ -132,7 +192,7 @@ class _LoginState extends State<Login> {
                       child: RaisedButton(
                         padding: EdgeInsets.symmetric(vertical: 16.0),
                         color: Colors.pink,
-                        onPressed: () {},
+                        onPressed: () => _login(),
                         elevation: 11,
                         shape: RoundedRectangleBorder(
                             borderRadius:

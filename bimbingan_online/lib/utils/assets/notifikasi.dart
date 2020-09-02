@@ -2,10 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
-void messageInfo(
-  BuildContext context,
-  String notif,
-) {
+void messageInfo(BuildContext context, String notif) {
   BotToast.showSimpleNotification(
     title: notif,
     closeIcon: Icon(
@@ -15,10 +12,7 @@ void messageInfo(
   );
 }
 
-void messageDanger(
-  BuildContext context,
-  String notif,
-) {
+void messageDanger(BuildContext context, String notif) {
   BotToast.showSimpleNotification(
     title: notif,
     closeIcon: Icon(
@@ -28,10 +22,7 @@ void messageDanger(
   );
 }
 
-void messageSuccess(
-  BuildContext context,
-  String notif,
-) {
+void messageSuccess(BuildContext context, String notif) {
   BotToast.showSimpleNotification(
     title: notif,
     duration: Duration(seconds: 3),

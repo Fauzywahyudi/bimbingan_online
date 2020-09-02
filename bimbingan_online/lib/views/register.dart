@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:bimbingan_online/models/page_aktor.dart';
-import 'package:bimbingan_online/utils/notifikasi.dart';
 import 'package:flutter/material.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
@@ -37,11 +36,6 @@ class _RegisterState extends State<Register> {
   void initState() {
     _pageLogin = widget.pageLogin ?? PageAktor.isMahasiswa;
     super.initState();
-  }
-
-  void _back() {
-    Navigator.pop(context);
-    print('keluar');
   }
 
   bool _validasiMahasiswa() {

@@ -1,4 +1,5 @@
 import 'package:bimbingan_online/views/login.dart';
+import 'package:bimbingan_online/views/splashscreen.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepPurple,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Login(),
+      home: SplashScreen(),
     );
   }
 }
