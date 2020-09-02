@@ -1,4 +1,5 @@
 import 'package:bimbingan_online/models/dosen.dart';
+import 'package:bimbingan_online/models/mahasiswa.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DataShared {
@@ -59,6 +60,19 @@ class DataShared {
     sharedPreferences.setString("jabatan", dosen.jabatan);
     sharedPreferences.setString("alamat", dosen.alamat);
     sharedPreferences.setString("nohp", dosen.nohp);
+  }
+
+  Future saveDataPrefMahasiswa(int value, Mahasiswa mahasiswa) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setInt("value", value);
+    sharedPreferences.setString("aktor", "Mahasiswa");
+    sharedPreferences.setInt("id", mahasiswa.idMahasiswa);
+    sharedPreferences.setString("username", mahasiswa.nim);
+    sharedPreferences.setString("nama", mahasiswa.nama);
+    sharedPreferences.setString("jk", mahasiswa.jk);
+    sharedPreferences.setString("jurusan", mahasiswa.jurusan);
+    sharedPreferences.setString("alamat", mahasiswa.alamat);
+    sharedPreferences.setString("nohp", mahasiswa.nohp);
   }
 
   Future logout() async {
