@@ -5,6 +5,7 @@ import 'package:bimbingan_online/models/mahasiswa.dart';
 import 'package:bimbingan_online/models/page_aktor.dart';
 import 'package:bimbingan_online/models/shared_preferenced.dart';
 import 'package:bimbingan_online/views/dosen/pages/home_dosen.dart';
+import 'package:bimbingan_online/views/mahasiswa/pages/home_mahasiswa.dart';
 import 'package:bimbingan_online/views/register.dart';
 import 'package:flutter/material.dart';
 import 'package:wave/config.dart';
@@ -72,7 +73,11 @@ class _LoginState extends State<Login> {
               data['alamat'],
               data['nohp']);
           _saveDataPrefMahasiswa(value, mahasiswa);
-          // pushReplacePage(context, HomeDosen(dosen: dosen));
+          pushReplacePage(
+              context,
+              HomeMahasiswa(
+                mahasiswa: mahasiswa,
+              ));
         } else {
           Dosen dosen = Dosen(
               int.parse(data['id_dosen']),
