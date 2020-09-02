@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bimbingan_online/models/dosen.dart';
+import 'package:bimbingan_online/models/mahasiswa.dart';
 import 'package:bimbingan_online/models/page_aktor.dart';
 import 'package:bimbingan_online/models/shared_preferenced.dart';
 import 'package:bimbingan_online/views/dosen/pages/home_dosen.dart';
@@ -24,8 +25,12 @@ class _LoginState extends State<Login> {
   PageAktor _pageLogin = PageAktor.isMahasiswa;
   DataShared _dataShared = DataShared();
 
-  Future _saveDataPref(int value, Dosen dosen) async {
+  Future _saveDataPrefDosen(int value, Dosen dosen) async {
     await _dataShared.saveDataPrefDosen(value, dosen);
+  }
+
+  Future _saveDataPrefMahasiswa(int value, Mahasiswa mahasiswa) async {
+    await _dataShared.saveDataPrefMahasiswa(value, mahasiswa);
   }
 
   void _changePage(PageAktor page) {
@@ -58,6 +63,16 @@ class _LoginState extends State<Login> {
       if (value == 1) {
         final data = await json.decode(response['data']);
         if (_isMahasiswa) {
+          Mahasiswa mahasiswa = Mahasiswa(
+              int.parse(data['id_mahasiswa']),
+              data['nim_mahasiswa'],
+              data['nama_mahasiswa'],
+              data['jk'],
+              data['jurusan'],
+              data['alamat'],
+              data['nohp']);
+          _saveDataPrefMahasiswa(value, mahasiswa);
+          // pushReplacePage(context, HomeDosen(dosen: dosen));
         } else {
           Dosen dosen = Dosen(
               int.parse(data['id_dosen']),
@@ -68,13 +83,13 @@ class _LoginState extends State<Login> {
               data['jabatan'],
               data['alamat'],
               data['nohp']);
-          setState(() async {
-            _saveDataPref(value, dosen);
-            _tecNim.text = "";
-            _tecPass.text = "";
-            pushReplacePage(context, HomeDosen());
-          });
+          _saveDataPrefDosen(value, dosen);
+          pushReplacePage(context, HomeDosen(dosen: dosen));
         }
+        setState(() async {
+          _tecNim.text = "";
+          _tecPass.text = "";
+        });
       } else if (value == 2) {
         messageInfo(context, pesan);
       } else {
