@@ -49,7 +49,7 @@ class ProfileDetail extends StatelessWidget {
         height: deviceSize.height * 0.2,
         padding: EdgeInsets.symmetric(horizontal: 20.0),
         decoration: BoxDecoration(
-          color: profile_info_background,
+          color: colPrimary,
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
         ),
         child: Column(
