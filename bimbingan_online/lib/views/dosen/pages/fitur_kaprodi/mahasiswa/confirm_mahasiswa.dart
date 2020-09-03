@@ -1,3 +1,4 @@
+import 'package:bimbingan_online/providers/konfirmasi_provider.dart';
 import 'package:bimbingan_online/providers/mahasiswa_provider.dart';
 import 'package:bimbingan_online/utils/assets.dart';
 import 'package:flutter/material.dart';
@@ -11,11 +12,11 @@ class ConfirmMahasiswa extends StatefulWidget {
 }
 
 class _ConfirmMahasiswaState extends State<ConfirmMahasiswa> {
-  MahasiswaProvider _mahasiswaProvider = MahasiswaProvider();
+  KonfirmasiProvider _konfirmasiProvider = KonfirmasiProvider();
 
   void _konfirmasi(String status) async {
-    await _mahasiswaProvider.konfirmasiMahasiswa(
-        context, int.parse(widget.data['id_mahasiswa']), status);
+    await _konfirmasiProvider.konfirmasiAktor(
+        context, int.parse(widget.data['id_mahasiswa']), status, "Mahasiswa");
     popPage(context);
   }
 
