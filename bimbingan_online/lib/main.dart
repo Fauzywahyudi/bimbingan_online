@@ -1,3 +1,4 @@
+import 'package:bimbingan_online/views/dosen/pages/fitur_kaprodi/dosen/dosen_page.dart';
 import 'package:bimbingan_online/views/dosen/pages/fitur_kaprodi/mahasiswa/mahasiswa_page.dart';
 import 'package:bimbingan_online/views/login.dart';
 import 'package:bimbingan_online/views/splashscreen.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
       routes: {
         //page fitur kaprodi
         MahasiswaPage.routeName: (context) => MahasiswaPage(),
+        DosenPage.routeName: (context) => DosenPage(),
       },
       builder: BotToastInit(),
       theme: ThemeData(

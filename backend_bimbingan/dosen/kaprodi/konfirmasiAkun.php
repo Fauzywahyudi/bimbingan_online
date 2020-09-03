@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $aktor = $_POST['aktor'];
     if ($aktor == "Mahasiswa") {
         Mahasiswa();
-    } else {
+    } else if ($aktor == "Dosen") {
         Dosen();
     }
 }
