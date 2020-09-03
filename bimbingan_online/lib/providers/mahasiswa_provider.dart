@@ -40,4 +40,22 @@ class MahasiswaProvider {
     }
     return data;
   }
+
+  Future konfirmasiMahasiswa(
+      BuildContext context, int id, String status) async {
+    final result =
+        await http.post(link.Link.kaprodi + "konfirmasiAkun.php", body: {
+      "aktor": "Mahasiswa",
+      "id": id.toString(),
+      "status": status,
+    });
+    final response = await json.decode(result.body);
+    int value = response['value'];
+    String pesan = response['message'];
+    if (value == 1) {
+      messageSuccess(context, pesan);
+    } else {
+      messageDanger(context, pesan);
+    }
+  }
 }

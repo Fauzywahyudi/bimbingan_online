@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:bimbingan_online/providers/mahasiswa_provider.dart';
 import 'package:bimbingan_online/utils/assets.dart';
+import 'package:bimbingan_online/views/dosen/pages/fitur_kaprodi/mahasiswa/confirm_mahasiswa.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -18,6 +21,15 @@ class MahasiswaPageState extends State<MahasiswaPage>
   Future<List> _getMahasiswa(String status) async {
     final result = await _mahasiswaProvider.getMahasiswa(context, status);
     return result;
+  }
+
+  Future<Null> handleRefresh() async {
+    Completer<Null> completer = new Completer<Null>();
+    new Future.delayed(new Duration(milliseconds: 500)).then((_) {
+      completer.complete();
+      setState(() {});
+    });
+    return completer.future;
   }
 
   @override
@@ -73,19 +85,23 @@ class MahasiswaPageState extends State<MahasiswaPage>
         builder: (context, snapshot) {
           if (snapshot.hasError) print(snapshot.error);
           return snapshot.hasData
-              ? ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: Icon(Icons.person),
-                      title: Text(
-                        snapshot.data[index]['nama_mahasiswa'],
-                        style: GoogleFonts.mcLaren(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle:
-                          Text("NIM :" + snapshot.data[index]['nim_mahasiswa']),
-                    );
-                  },
+              ? RefreshIndicator(
+                  onRefresh: handleRefresh,
+                  child: ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        leading: Icon(Icons.person),
+                        title: Text(
+                          snapshot.data[index]['nama_mahasiswa'],
+                          style:
+                              GoogleFonts.mcLaren(fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(
+                            "NIM :" + snapshot.data[index]['nim_mahasiswa']),
+                      );
+                    },
+                  ),
                 )
               : loadingCircular();
         },
@@ -100,19 +116,30 @@ class MahasiswaPageState extends State<MahasiswaPage>
         builder: (context, snapshot) {
           if (snapshot.hasError) print(snapshot.error);
           return snapshot.hasData
-              ? ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: Icon(Icons.person),
-                      title: Text(
-                        snapshot.data[index]['nama_mahasiswa'],
-                        style: GoogleFonts.mcLaren(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle:
-                          Text("NIM :" + snapshot.data[index]['nim_mahasiswa']),
-                    );
-                  },
+              ? RefreshIndicator(
+                  onRefresh: handleRefresh,
+                  child: ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                          leading: Icon(Icons.person),
+                          title: Text(
+                            snapshot.data[index]['nama_mahasiswa'],
+                            style: GoogleFonts.mcLaren(
+                                fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                            "NIM :" + snapshot.data[index]['nim_mahasiswa'],
+                          ),
+                          onTap: () async {
+                            await pushPage(
+                              context,
+                              ConfirmMahasiswa(data: snapshot.data[index]),
+                            );
+                            handleRefresh();
+                          });
+                    },
+                  ),
                 )
               : loadingCircular();
         },
