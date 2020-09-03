@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bimbingan_online/providers/dosen_provider.dart';
 import 'package:bimbingan_online/utils/assets.dart';
+import 'package:bimbingan_online/views/dosen/pages/fitur_kaprodi/dosen/comfirm_dosen.dart';
 import 'package:bimbingan_online/views/dosen/pages/fitur_kaprodi/mahasiswa/confirm_mahasiswa.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -133,7 +134,7 @@ class DosenPageState extends State<DosenPage> with TickerProviderStateMixin {
                           onTap: () async {
                             await pushPage(
                               context,
-                              ConfirmMahasiswa(data: snapshot.data[index]),
+                              ConfirmDosen(data: snapshot.data[index]),
                             );
                             handleRefresh();
                           });
