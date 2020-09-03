@@ -57,11 +57,11 @@ const List profileItems = [
 ];
 
 List<Catg> listProfileCategories = [
-  Catg(name: 'Mahasiswa', icon: Icons.person, number: 0),
-  Catg(name: 'Dosen', icon: Icons.person_outline, number: 0),
-  Catg(name: 'Proposal', icon: Icons.archive, number: 2),
-  Catg(name: 'Jadwal', icon: Icons.schedule, number: 2),
-  Catg(name: 'Kompre', icon: Icons.school, number: 0),
+  Catg(name: 'MahasiswaPage', icon: Icons.person, number: 0),
+  Catg(name: 'DosenPage', icon: Icons.person_outline, number: 0),
+  Catg(name: 'ProposalPage', icon: Icons.archive, number: 2),
+  Catg(name: 'JadwalPage', icon: Icons.schedule, number: 2),
+  Catg(name: 'KomprePage', icon: Icons.school, number: 0),
 ];
 
 List<FurnitureCatg> furnitureCategoriesList = [

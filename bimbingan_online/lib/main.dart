@@ -1,3 +1,4 @@
+import 'package:bimbingan_online/views/dosen/pages/fitur_kaprodi/mahasiswa/mahasiswa_page.dart';
 import 'package:bimbingan_online/views/login.dart';
 import 'package:bimbingan_online/views/splashscreen.dart';
 import 'package:bot_toast/bot_toast.dart';
@@ -16,6 +17,10 @@ class MyApp extends StatelessWidget {
       navigatorObservers: [
         BotToastNavigatorObserver()
       ], //Register route observer
+      routes: {
+        //page fitur kaprodi
+        MahasiswaPage.routeName: (context) => MahasiswaPage(),
+      },
       builder: BotToastInit(),
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,

@@ -1,3 +1,5 @@
+import 'package:bimbingan_online/utils/assets/navigator.dart';
+
 import '../../utils/constant.dart';
 import 'package:flutter/material.dart';
 
@@ -16,8 +18,7 @@ class Category extends StatelessWidget {
             children: <Widget>[
               GestureDetector(
                 onTap: () {
-                  if (catg.name == listProfileCategories[0].name)
-                    Navigator.pushNamed(context, '/furniture');
+                  pushNamePage(context, "/" + catg.name);
                 },
                 child: Container(
                   padding: EdgeInsets.all(10.0),
@@ -56,7 +57,8 @@ class Category extends StatelessWidget {
             height: 10.0,
           ),
           Text(
-            catg.name,
+            "${catg.name.replaceAll("Page", "")}",
+            // catg.name,
             style: TextStyle(
               fontSize: 13.0,
             ),
