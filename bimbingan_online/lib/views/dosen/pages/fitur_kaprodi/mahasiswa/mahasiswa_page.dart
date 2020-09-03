@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:bimbingan_online/models/page_aktor.dart';
 import 'package:bimbingan_online/providers/mahasiswa_provider.dart';
 import 'package:bimbingan_online/utils/assets.dart';
 import 'package:bimbingan_online/views/dosen/pages/fitur_kaprodi/mahasiswa/confirm_mahasiswa.dart';
+import 'package:bimbingan_online/views/register.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -41,6 +43,16 @@ class MahasiswaPageState extends State<MahasiswaPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await pushPage(
+              context,
+              Register(
+                pageLogin: PageAktor.isMahasiswa,
+              ));
+        },
+        child: Icon(Icons.add),
+      ),
       appBar: AppBar(
         title: Text("Mahasiswa"),
         bottom: TabBar(
