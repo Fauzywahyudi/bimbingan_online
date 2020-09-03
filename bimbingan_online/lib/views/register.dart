@@ -49,7 +49,7 @@ class _RegisterState extends State<Register> {
   bool _validasi() {
     if (_isMahasiswa && (_tecNim.text.isEmpty || _tecNim.text.length != 8))
       return false;
-    if (_tecPass.text.isEmpty) return false;
+    if (_tecPass.text.isEmpty || _tecPass.text.length < 8) return false;
     if (_tecNama.text.isEmpty) return false;
     if (_tecNohp.text.isEmpty || _tecNohp.text.length < 10) return false;
     if (_tecAlamat.text.isEmpty) return false;
@@ -89,6 +89,11 @@ class _RegisterState extends State<Register> {
       if (_isMahasiswa &&
           (_tecNim.text.length != 8 && _tecNim.text.isNotEmpty)) {
         messageInfo(context, "NIM tidak valid!");
+      } else if (!_isMahasiswa &&
+          (_tecNim.text.length != 10 && _tecNim.text.isNotEmpty)) {
+        messageInfo(context, "NIDN tidak valid!");
+      } else if (_tecPass.text.length < 8 && _tecPass.text.isNotEmpty) {
+        messageInfo(context, "Panjang password min 8 karakter");
       } else if (_tecNohp.text.length < 10 && _tecNohp.text.isNotEmpty) {
         messageInfo(context, "No. HP tidak valid!");
       } else {
