@@ -1,5 +1,6 @@
 import 'package:bimbingan_online/views/dosen/pages/fitur_kaprodi/dosen/dosen_page.dart';
 import 'package:bimbingan_online/views/dosen/pages/fitur_kaprodi/mahasiswa/mahasiswa_page.dart';
+import 'package:bimbingan_online/views/dosen/pages/fitur_kaprodi/proposal/proposal_page.dart';
 import 'package:bimbingan_online/views/login.dart';
 import 'package:bimbingan_online/views/splashscreen.dart';
 import 'package:bot_toast/bot_toast.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         //page fitur kaprodi
         MahasiswaPage.routeName: (context) => MahasiswaPage(),
         DosenPage.routeName: (context) => DosenPage(),
+        ProposalPage.routeName: (context) => ProposalPage(),
       },
       builder: BotToastInit(),
       theme: ThemeData(
