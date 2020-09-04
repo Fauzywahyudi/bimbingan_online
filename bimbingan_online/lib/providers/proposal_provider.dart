@@ -39,10 +39,12 @@ class ProposalProvider {
     return data;
   }
 
-  Future konfirmasi(BuildContext context, int id, String status) async {
+  Future konfirmasi(BuildContext context, int idProposal, int idMahasiswa,
+      String status) async {
     final result =
-        await http.post(link.Link.kaprodi + "konfirmasiAkun.php", body: {
-      "id": id.toString(),
+        await http.post(link.Link.kaprodi + "konfirmasiProposal.php", body: {
+      "id_proposal": idProposal.toString(),
+      "id_mahasiswa": idMahasiswa.toString(),
       "status": status,
     });
     final response = await json.decode(result.body);
