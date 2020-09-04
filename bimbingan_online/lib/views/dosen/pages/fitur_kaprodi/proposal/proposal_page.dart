@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bimbingan_online/providers/proposal_provider.dart';
 import 'package:bimbingan_online/utils/assets.dart';
+import 'package:bimbingan_online/views/dosen/pages/fitur_kaprodi/proposal/confirm_proposal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
 import 'package:flutter_expanded_tile/tileController.dart';
@@ -37,23 +38,12 @@ class _ProposalPageState extends State<ProposalPage>
   @override
   void initState() {
     tabController = new TabController(length: 2, vsync: this);
-    _controller = ExpandedTileController();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          // await pushPage(
-          //     context,
-          //     Register(
-          //       pageLogin: PageAktor.isMahasiswa,
-          //     ));
-        },
-        child: Icon(Icons.add),
-      ),
       appBar: AppBar(
         title: Text("Proposal"),
         bottom: TabBar(
@@ -61,16 +51,6 @@ class _ProposalPageState extends State<ProposalPage>
           labelColor: colLight,
           indicatorColor: colPrimary,
           indicatorWeight: 5,
-          onTap: (v) {
-            setState(() {
-              // model.scrollController.position.setPixels(0);
-              // model.isSearch = false;
-              // model.searchTransaksi.text = "";
-              // model.wordSearch1 = "";
-              // model.wordSearch2 = "";
-              // model.foc_search.unfocus();
-            });
-          },
           tabs: <Widget>[
             Tab(
               text: "Confirm",
@@ -94,7 +74,7 @@ class _ProposalPageState extends State<ProposalPage>
   Widget _buildConfirm() {
     return Container(
       child: FutureBuilder<List>(
-        future: _getMahasiswa("Confirm"),
+        future: _getMahasiswa("Acc"),
         builder: (context, snapshot) {
           if (snapshot.hasError) print(snapshot.error);
           return snapshot.hasData
@@ -143,10 +123,10 @@ class _ProposalPageState extends State<ProposalPage>
                             "NIM :" + snapshot.data[index]['nim_mahasiswa'],
                           ),
                           onTap: () async {
-                            // await pushPage(
-                            //   context,
-                            //   ConfirmMahasiswa(data: snapshot.data[index]),
-                            // );
+                            await pushPage(
+                              context,
+                              ConfirmProposal(data: snapshot.data[index]),
+                            );
                             handleRefresh();
                           });
                     },
