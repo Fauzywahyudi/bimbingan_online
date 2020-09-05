@@ -60,7 +60,7 @@ List<Catg> listProfileCategories = [
   Catg(name: 'MahasiswaPage', icon: Icons.person, number: 0),
   Catg(name: 'DosenPage', icon: Icons.person_outline, number: 0),
   Catg(name: 'ProposalPage', icon: Icons.archive, number: 2),
-  Catg(name: 'JadwalPage', icon: Icons.schedule, number: 2),
+  Catg(name: 'PengumumanPage', icon: Icons.schedule, number: 2),
   Catg(name: 'KomprePage', icon: Icons.school, number: 0),
 ];
 
