@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bimbingan_online/providers/proposal_provider.dart';
 import 'package:bimbingan_online/utils/assets.dart';
+import 'package:bimbingan_online/views/dosen/pages/fitur_kaprodi/proposal/acc_judul.dart';
 import 'package:bimbingan_online/views/dosen/pages/fitur_kaprodi/proposal/confirm_proposal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
@@ -53,7 +54,7 @@ class _ProposalPageState extends State<ProposalPage>
           indicatorWeight: 5,
           tabs: <Widget>[
             Tab(
-              text: "Confirm",
+              text: "Diterima",
             ),
             Tab(
               text: "Proses",
@@ -84,14 +85,20 @@ class _ProposalPageState extends State<ProposalPage>
                     itemCount: snapshot.data.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        leading: Icon(Icons.person),
-                        title: Text(
-                          snapshot.data[index]['nama_mahasiswa'],
-                          style: GoogleFonts.mcLaren(),
-                        ),
-                        subtitle: Text(
-                            "NIM :" + snapshot.data[index]['nim_mahasiswa']),
-                      );
+                          leading: Icon(Icons.person),
+                          title: Text(
+                            snapshot.data[index]['nama_mahasiswa'],
+                            style: GoogleFonts.mcLaren(),
+                          ),
+                          subtitle: Text(
+                              "NIM :" + snapshot.data[index]['nim_mahasiswa']),
+                          onTap: () async {
+                            await pushPage(
+                              context,
+                              AccJudul(data: snapshot.data[index]),
+                            );
+                            handleRefresh();
+                          });
                     },
                   ),
                 )

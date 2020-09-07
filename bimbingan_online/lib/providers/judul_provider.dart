@@ -1,0 +1,60 @@
+import 'dart:convert';
+import 'package:bimbingan_online/utils/assets.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:bimbingan_online/utils/link.dart' as link;
+
+class JudulProvider {
+  // Future<List> getProposal(BuildContext context, String status) async {
+  //   final result =
+  //       await http.post(link.Link.kaprodi + "getProposal.php", body: {
+  //     "status": status,
+  //   });
+  //   final response = await json.decode(result.body);
+  //   List data;
+  //   int value = response['value'];
+  //   String pesan = response['message'];
+  //   if (value == 1) {
+  //     data = json.decode(response['data']);
+  //   } else {
+  //     messageDanger(context, pesan);
+  //   }
+  //   return data;
+  // }
+
+  // Future<List> getProposalById(BuildContext context, int id) async {
+  //   final result =
+  //       await http.post(link.Link.kaprodi + "getProposalById.php", body: {
+  //     "id": id.toString(),
+  //   });
+  //   final response = await json.decode(result.body);
+  //   List data;
+  //   int value = response['value'];
+  //   String pesan = response['message'];
+  //   if (value == 1) {
+  //     data = json.decode(response['data']);
+  //   } else {
+  //     messageDanger(context, pesan);
+  //   }
+  //   return data;
+  // }
+
+  Future accJudul(BuildContext context, int idMahasiswa, String judul,
+      int idDospem1, idDospem2, idProposal) async {
+    final result = await http.post(link.Link.kaprodi + "accJudul.php", body: {
+      "id_mahasiswa": idMahasiswa.toString(),
+      "id_proposal": idProposal.toString(),
+      "judul": judul,
+      "id_dospem1": idDospem1.toString(),
+      "id_dospem2": idDospem2.toString(),
+    });
+    final response = await json.decode(result.body);
+    int value = response['value'];
+    String pesan = response['message'];
+    if (value == 1) {
+      messageSuccess(context, pesan);
+    } else {
+      messageDanger(context, pesan);
+    }
+  }
+}
