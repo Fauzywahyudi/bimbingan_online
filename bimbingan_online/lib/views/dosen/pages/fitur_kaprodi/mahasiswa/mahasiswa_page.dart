@@ -4,6 +4,7 @@ import 'package:bimbingan_online/models/page_aktor.dart';
 import 'package:bimbingan_online/providers/mahasiswa_provider.dart';
 import 'package:bimbingan_online/utils/assets.dart';
 import 'package:bimbingan_online/views/dosen/pages/fitur_kaprodi/mahasiswa/confirm_mahasiswa.dart';
+import 'package:bimbingan_online/views/dosen/pages/fitur_kaprodi/mahasiswa/detail_mahasiswa.dart';
 import 'package:bimbingan_online/views/register.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -61,14 +62,7 @@ class MahasiswaPageState extends State<MahasiswaPage>
           indicatorColor: colPrimary,
           indicatorWeight: 5,
           onTap: (v) {
-            setState(() {
-              // model.scrollController.position.setPixels(0);
-              // model.isSearch = false;
-              // model.searchTransaksi.text = "";
-              // model.wordSearch1 = "";
-              // model.wordSearch2 = "";
-              // model.foc_search.unfocus();
-            });
+            setState(() {});
           },
           tabs: <Widget>[
             Tab(
@@ -111,6 +105,13 @@ class MahasiswaPageState extends State<MahasiswaPage>
                         ),
                         subtitle: Text(
                             "NIM :" + snapshot.data[index]['nim_mahasiswa']),
+                        onTap: () async {
+                          await pushPage(
+                            context,
+                            DetailMahasiswa(data: snapshot.data[index]),
+                          );
+                          handleRefresh();
+                        },
                       );
                     },
                   ),
@@ -134,22 +135,23 @@ class MahasiswaPageState extends State<MahasiswaPage>
                     itemCount: snapshot.data.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                          leading: Icon(Icons.person),
-                          title: Text(
-                            snapshot.data[index]['nama_mahasiswa'],
-                            style: GoogleFonts.mcLaren(
-                                fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Text(
-                            "NIM :" + snapshot.data[index]['nim_mahasiswa'],
-                          ),
-                          onTap: () async {
-                            await pushPage(
-                              context,
-                              ConfirmMahasiswa(data: snapshot.data[index]),
-                            );
-                            handleRefresh();
-                          });
+                        leading: Icon(Icons.person),
+                        title: Text(
+                          snapshot.data[index]['nama_mahasiswa'],
+                          style:
+                              GoogleFonts.mcLaren(fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(
+                          "NIM :" + snapshot.data[index]['nim_mahasiswa'],
+                        ),
+                        onTap: () async {
+                          await pushPage(
+                            context,
+                            ConfirmMahasiswa(data: snapshot.data[index]),
+                          );
+                          handleRefresh();
+                        },
+                      );
                     },
                   ),
                 )
