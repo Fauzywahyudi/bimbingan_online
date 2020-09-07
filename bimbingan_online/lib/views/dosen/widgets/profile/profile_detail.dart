@@ -47,7 +47,7 @@ class ProfileDetail extends StatelessWidget {
       elevation: 10.0,
       child: Container(
         height: deviceSize.height * 0.2,
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
+        padding: EdgeInsets.symmetric(horizontal: 10.0),
         decoration: BoxDecoration(
           color: colPrimary,
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -63,13 +63,16 @@ class ProfileDetail extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    AutoSizeText(
-                      "$nama $gelar",
-                      maxLines: 2,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold),
+                    Container(
+                      width: MediaQuery.of(context).size.width - 110,
+                      child: AutoSizeText(
+                        "$nama $gelar",
+                        maxLines: 1,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                     Text(
                       jabatan,

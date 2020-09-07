@@ -4,7 +4,7 @@ class Link {
   static final String server =
       "http://10.0.2.2/bimbingan_online/backend_bimbingan/";
   static final String dosen =
-      "http://10.0.2.2/bimbingan_online/backend_bimbingan/";
+      "http://10.0.2.2/bimbingan_online/backend_bimbingan/dosen/";
   static final String kaprodi =
       "http://10.0.2.2/bimbingan_online/backend_bimbingan/dosen/kaprodi/";
 }

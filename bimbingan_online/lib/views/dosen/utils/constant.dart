@@ -75,24 +75,28 @@ List<FurnitureCatg> furnitureCategoriesList = [
 List<ProfileMenu> profileMenuList = [
   ProfileMenu(
     title: 'Mahasiswa Bimbingan',
+    page: 'MahasiswaBimbinganPage',
     subTitle: 'Data mahasiswa bimbingan',
     iconColor: profile_info_address,
     icon: Icons.group,
   ),
   ProfileMenu(
     title: 'Daftar Bimbingan',
+    page: 'DaftarBimbinganPage',
     subTitle: 'Daftar jadwal bimbingan',
     iconColor: profile_info_privacy,
     icon: Icons.schedule,
   ),
   ProfileMenu(
     title: 'Pesan',
+    page: 'PesanDosenPage',
     subTitle: 'Pesan dengan mahasiswa bimbingan',
     iconColor: profile_info_general,
     icon: Icons.message,
   ),
   ProfileMenu(
     title: 'Notifikasi',
+    page: 'NotifikasiDosenPage',
     subTitle: 'Notifikasi informasi bimbingan',
     iconColor: profile_info_notification,
     icon: Icons.notifications,
@@ -102,9 +106,11 @@ List<ProfileMenu> profileMenuList = [
 class ProfileMenu {
   String title;
   String subTitle;
+  String page;
   IconData icon;
   Color iconColor;
-  ProfileMenu({this.icon, this.title, this.iconColor, this.subTitle});
+  ProfileMenu(
+      {this.icon, this.title, this.iconColor, this.subTitle, this.page});
 }
 
 class Catg {
