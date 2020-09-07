@@ -54,6 +54,11 @@ class _HomeDosenState extends State<HomeDosen> {
               height: 30.0,
             ),
             Flexible(child: ProfileMenu()),
+            widget.dosen.jabatan == "Dosen Tetap"
+                ? SizedBox(
+                    height: 100,
+                  )
+                : Container(),
           ],
         ),
       ),
