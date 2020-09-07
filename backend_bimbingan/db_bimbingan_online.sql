@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Sep 2020 pada 20.17
+-- Waktu pembuatan: 07 Sep 2020 pada 11.06
 -- Versi server: 10.4.13-MariaDB
 -- Versi PHP: 7.4.8
 
@@ -47,23 +47,10 @@ CREATE TABLE `dosen` (
 
 INSERT INTO `dosen` (`id_dosen`, `nidn_dosen`, `password`, `nama_dosen`, `gelar`, `jk`, `jabatan`, `alamat`, `nohp`, `status`, `tgl_daftar`) VALUES
 (1, '1234567890', '21232f297a57a5a743894a0e4a801fc3', 'Rini Sovia', 'S.Kom., M.Kom.', 'Perempuan', 'Ketua Prodi', 'Padang', '082288228822', 'Confirm', '2020-08-06 22:32:07'),
-(3, '1234567899', '21232f297a57a5a743894a0e4a801fc3', 'Eka Praja Mandala Wiyata', 'S.Kom., M.Kom.', 'Laki-laki', 'Dosen Tetap', 'Padang', '+6282288229856', 'Confirm', '2020-08-31 00:36:04');
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `info_jadwal`
---
-
-CREATE TABLE `info_jadwal` (
-  `id_jadwal` int(11) NOT NULL,
-  `tipe_jadwal` varchar(25) NOT NULL,
-  `nama_jadwal` text NOT NULL,
-  `jadwal_mulai` datetime NOT NULL,
-  `jadwal_selesai` datetime NOT NULL,
-  `status` varchar(15) NOT NULL,
-  `keterangan` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+(3, '1234567899', '21232f297a57a5a743894a0e4a801fc3', 'Eka Praja', 'S.Kom., M.Kom.', 'Laki-laki', 'Dosen Tetap', 'Padang', '+6282288229856', 'Confirm', '2020-08-31 00:36:04'),
+(4, '1234567898', '21232f297a57a5a743894a0e4a801fc3', 'Randi Permanan', 'S.Kom., M.Kom', 'Laki-laki', 'Dosen Tetap', 'Padang', '+6282288229856', 'Confirm', '2020-09-03 16:57:18'),
+(5, '1234567897', '21232f297a57a5a743894a0e4a801fc3', 'Musli Yanto', 'S.Kom., M.Kom.', 'Laki-laki', 'Dosen Tetap', 'Padang', '+6282288229856', 'Reject', '2020-09-03 17:04:12'),
+(6, '1234567896', '21232f297a57a5a743894a0e4a801fc3', 'Fauzy Wahyudi', 'S.Kom., M.Kom.', 'Laki-laki', 'Dosen Tetap', 'Padang', '+6282288229856', 'Confirm', '2020-09-03 17:05:28');
 
 -- --------------------------------------------------------
 
@@ -110,7 +97,7 @@ CREATE TABLE `jadwal_skripsi` (
   `penguji` text NOT NULL,
   `keterangan` text NOT NULL,
   `status` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='jadwal seminar & kompre';
 
 -- --------------------------------------------------------
 
@@ -122,7 +109,8 @@ CREATE TABLE `judul` (
   `id_judul` int(11) NOT NULL,
   `id_mahasiswa` int(11) NOT NULL,
   `judul` text NOT NULL,
-  `pembimbing` text NOT NULL,
+  `pembimbing1` int(11) NOT NULL,
+  `pembimbing2` int(11) NOT NULL,
   `tgl_acc` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -144,6 +132,41 @@ CREATE TABLE `mahasiswa` (
   `status` varchar(15) NOT NULL,
   `tgl_daftar` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `mahasiswa`
+--
+
+INSERT INTO `mahasiswa` (`id_mahasiswa`, `nim_mahasiswa`, `password`, `nama_mahasiswa`, `jk`, `jurusan`, `alamat`, `nohp`, `status`, `tgl_daftar`) VALUES
+(1, '16100020', 'c9d2cce909ea37234be8af1a1f958805', 'ANNISA SYAFIRA', 'Perempuan', 'Pendidikan Informatika', 'Padang', '+6282288229856', 'Confirm', '2020-09-03 01:55:49'),
+(2, '16100021', '6172de70289f996b192e1b2f5a932ace', 'FAUZY WAHYUDI', 'Laki-laki', 'Pendidikan Informatika', 'Solok', '+6282288229856', 'Confirm', '2020-09-03 12:49:27'),
+(3, '16100022', '8c9a8d36c39b26c8e8239a491e39813b', 'ROFIUL CHULUQ', 'Laki-laki', 'Pendidikan Informatika', 'Padang', '+6282288229856', 'Reject', '2020-09-03 12:50:20'),
+(4, '16100025', 'e04f28cc33cb20274dd3ff44e600a923', 'RAHMAT DANI', 'Laki-laki', 'Pendidikan Informatika', 'Pekanbaru', '+6292288229856', 'Confirm', '2020-09-03 15:44:50'),
+(5, '16100030', '46171b077997b166bb30cf5494eff2f8', 'Ferriy Hafid', 'Laki-laki', 'Pendidikan Informatika', 'Padang', '+6282288229856', 'Confirm', '2020-09-03 17:09:32');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pengumuman`
+--
+
+CREATE TABLE `pengumuman` (
+  `id_pengumuman` int(11) NOT NULL,
+  `tipe_pengumuman` varchar(25) NOT NULL,
+  `judul_pengumuman` text NOT NULL,
+  `status` varchar(15) NOT NULL DEFAULT 'Akan Datang',
+  `keterangan` text NOT NULL,
+  `tgl_post` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `pengumuman`
+--
+
+INSERT INTO `pengumuman` (`id_pengumuman`, `tipe_pengumuman`, `judul_pengumuman`, `status`, `keterangan`, `tgl_post`) VALUES
+(2, 'Seminar Proposal', 'Informasi Tentang Seminar Proposal', 'Akan Datang', 'bagi yang ikut bla bla bla\r\nbla bla bla\r\n', '2020-09-05 15:38:20'),
+(3, 'Seminar Proposal', 'Informasi Tentang Seminar Proposal', 'Akan Datang', 'bagi yang ikut bla bla bla\r\nbla bla bla\r\n', '2020-09-05 15:38:34'),
+(4, 'Skripsi', 'Info Pembimbing', 'Akan Datang', 'pembimbing ada 2 ya', '2020-09-07 05:16:32');
 
 -- --------------------------------------------------------
 
@@ -189,6 +212,14 @@ CREATE TABLE `proposal` (
   `status` varchar(15) NOT NULL DEFAULT 'Proses'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `proposal`
+--
+
+INSERT INTO `proposal` (`id_proposal`, `id_mahasiswa`, `judul`, `file`, `tgl_upload`, `status`) VALUES
+(1, 5, 'bla bla', 'file.doc', '2020-09-04 09:28:06', 'Ditolak'),
+(2, 5, 'asdasd', 'asds.doc', '2020-09-04 09:28:06', 'Acc');
+
 -- --------------------------------------------------------
 
 --
@@ -209,12 +240,6 @@ CREATE TABLE `room_chat` (
 --
 ALTER TABLE `dosen`
   ADD PRIMARY KEY (`id_dosen`);
-
---
--- Indeks untuk tabel `info_jadwal`
---
-ALTER TABLE `info_jadwal`
-  ADD PRIMARY KEY (`id_jadwal`);
 
 --
 -- Indeks untuk tabel `info_pembimbing`
@@ -245,6 +270,12 @@ ALTER TABLE `judul`
 --
 ALTER TABLE `mahasiswa`
   ADD PRIMARY KEY (`id_mahasiswa`);
+
+--
+-- Indeks untuk tabel `pengumuman`
+--
+ALTER TABLE `pengumuman`
+  ADD PRIMARY KEY (`id_pengumuman`);
 
 --
 -- Indeks untuk tabel `pesan`
@@ -278,13 +309,7 @@ ALTER TABLE `room_chat`
 -- AUTO_INCREMENT untuk tabel `dosen`
 --
 ALTER TABLE `dosen`
-  MODIFY `id_dosen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT untuk tabel `info_jadwal`
---
-ALTER TABLE `info_jadwal`
-  MODIFY `id_jadwal` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_dosen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `info_pembimbing`
@@ -314,7 +339,13 @@ ALTER TABLE `judul`
 -- AUTO_INCREMENT untuk tabel `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
-  MODIFY `id_mahasiswa` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_mahasiswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT untuk tabel `pengumuman`
+--
+ALTER TABLE `pengumuman`
+  MODIFY `id_pengumuman` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `pesan`
@@ -332,7 +363,7 @@ ALTER TABLE `progres`
 -- AUTO_INCREMENT untuk tabel `proposal`
 --
 ALTER TABLE `proposal`
-  MODIFY `id_proposal` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_proposal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `room_chat`
