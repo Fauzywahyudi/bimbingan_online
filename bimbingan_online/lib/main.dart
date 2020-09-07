@@ -1,3 +1,5 @@
+import 'package:bimbingan_online/views/dosen/pages/fitur_kaprodi/pengumuman/tambah_pengumuman.dart';
+
 import 'views/dosen/pages/fitur_kaprodi/dosen/dosen_page.dart';
 import 'views/dosen/pages/fitur_kaprodi/mahasiswa/mahasiswa_page.dart';
 import 'views/dosen/pages/fitur_kaprodi/pengumuman/pengumuman_page.dart';
@@ -25,6 +27,7 @@ class MyApp extends StatelessWidget {
         DosenPage.routeName: (context) => DosenPage(),
         ProposalPage.routeName: (context) => ProposalPage(),
         PengumumanPage.routeName: (context) => PengumumanPage(),
+        TambahPengumuman.routeName: (context) => TambahPengumuman(),
       },
       builder: BotToastInit(),
       theme: ThemeData(

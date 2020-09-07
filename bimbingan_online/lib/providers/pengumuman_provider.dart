@@ -39,4 +39,23 @@ class PengumumanProvider {
     }
     return data;
   }
+
+  Future<int> addPengumuman(BuildContext context, String tipe, String judul,
+      String keterangan) async {
+    final result =
+        await http.post(link.Link.kaprodi + "addPengumuman.php", body: {
+      "tipe": tipe,
+      "judul": judul,
+      "keterangan": keterangan,
+    });
+    final response = await json.decode(result.body);
+    int value = response['value'];
+    String pesan = response['message'];
+    if (value == 1) {
+      messageSuccess(context, pesan);
+    } else {
+      messageDanger(context, pesan);
+    }
+    return value;
+  }
 }

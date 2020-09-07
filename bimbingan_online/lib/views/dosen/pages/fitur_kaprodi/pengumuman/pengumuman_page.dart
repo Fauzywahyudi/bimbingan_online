@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bimbingan_online/providers/pengumuman_provider.dart';
 import 'package:bimbingan_online/utils/assets.dart';
+import 'package:bimbingan_online/views/dosen/pages/fitur_kaprodi/pengumuman/tambah_pengumuman.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -32,6 +33,14 @@ class _PengumumanPageState extends State<PengumumanPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Pengumuman"),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        tooltip: "Tambah Pengumuman",
+        onPressed: () async {
+          await pushNamePage(context, TambahPengumuman.routeName);
+          handleRefresh();
+        },
       ),
       body: Container(
         child: FutureBuilder<List>(
