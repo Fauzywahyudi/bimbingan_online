@@ -75,28 +75,28 @@ List<FurnitureCatg> furnitureCategoriesList = [
 List<ProfileMenu> profileMenuList = [
   ProfileMenu(
     title: 'Mahasiswa Bimbingan',
-    page: 'MahasiswaBimbinganPage',
+    page: 'MahasiswaBimbinganDosen',
     subTitle: 'Data mahasiswa bimbingan',
     iconColor: profile_info_address,
     icon: Icons.group,
   ),
   ProfileMenu(
     title: 'Daftar Bimbingan',
-    page: 'DaftarBimbinganPage',
+    page: 'DaftarBimbinganDosen',
     subTitle: 'Daftar jadwal bimbingan',
     iconColor: profile_info_privacy,
     icon: Icons.schedule,
   ),
   ProfileMenu(
     title: 'Pesan',
-    page: 'PesanDosenPage',
+    page: 'PesanDosen',
     subTitle: 'Pesan dengan mahasiswa bimbingan',
     iconColor: profile_info_general,
     icon: Icons.message,
   ),
   ProfileMenu(
     title: 'Notifikasi',
-    page: 'NotifikasiDosenPage',
+    page: 'NotifikasiDosen',
     subTitle: 'Notifikasi informasi bimbingan',
     iconColor: profile_info_notification,
     icon: Icons.notifications,

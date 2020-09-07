@@ -5,7 +5,7 @@ import 'package:bimbingan_online/providers/mahasiswa_bimbingan_provider.dart';
 import 'package:flutter/material.dart';
 
 class MahasiswaBimbingan extends StatefulWidget {
-  static const routeName = '/MahasiswaBimbinganPage';
+  static const routeName = '/MahasiswaBimbinganDosen';
   @override
   _MahasiswaBimbinganState createState() => _MahasiswaBimbinganState();
 }
