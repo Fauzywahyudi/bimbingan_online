@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 07 Sep 2020 pada 11.06
+-- Waktu pembuatan: 07 Sep 2020 pada 23.21
 -- Versi server: 10.4.13-MariaDB
 -- Versi PHP: 7.4.8
 
@@ -20,6 +20,24 @@ SET time_zone = "+07:00";
 --
 -- Database: `db_bimbingan_online`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `bahan_bimbingan`
+--
+
+CREATE TABLE `bahan_bimbingan` (
+  `id_bahan` int(11) NOT NULL,
+  `id_mahasiswa` int(11) NOT NULL,
+  `id_bimbingan` int(11) NOT NULL,
+  `bab` int(11) NOT NULL,
+  `judul` text NOT NULL,
+  `file` text NOT NULL,
+  `status` varchar(15) NOT NULL DEFAULT 'Belum dibaca',
+  `keterangan` text NOT NULL,
+  `tgl_upload` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -74,7 +92,6 @@ CREATE TABLE `info_pembimbing` (
 
 CREATE TABLE `jadwal_bimbingan` (
   `id_bimbingan` int(11) NOT NULL,
-  `no_bimbingan` int(11) NOT NULL,
   `id_dosen` int(11) NOT NULL,
   `jadwal_mulai` datetime NOT NULL,
   `jadwal_selesai` datetime NOT NULL,
@@ -113,6 +130,13 @@ CREATE TABLE `judul` (
   `pembimbing2` int(11) NOT NULL,
   `tgl_acc` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `judul`
+--
+
+INSERT INTO `judul` (`id_judul`, `id_mahasiswa`, `judul`, `pembimbing1`, `pembimbing2`, `tgl_acc`) VALUES
+(1, 5, 'asdasd', 1, 4, '2020-09-08 01:12:10');
 
 -- --------------------------------------------------------
 
@@ -218,7 +242,7 @@ CREATE TABLE `proposal` (
 
 INSERT INTO `proposal` (`id_proposal`, `id_mahasiswa`, `judul`, `file`, `tgl_upload`, `status`) VALUES
 (1, 5, 'bla bla', 'file.doc', '2020-09-04 09:28:06', 'Ditolak'),
-(2, 5, 'asdasd', 'asds.doc', '2020-09-04 09:28:06', 'Acc');
+(2, 5, 'asdasd', 'asds.doc', '2020-09-04 09:28:06', 'Acc Rekap');
 
 -- --------------------------------------------------------
 
@@ -234,6 +258,12 @@ CREATE TABLE `room_chat` (
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indeks untuk tabel `bahan_bimbingan`
+--
+ALTER TABLE `bahan_bimbingan`
+  ADD PRIMARY KEY (`id_bahan`);
 
 --
 -- Indeks untuk tabel `dosen`
@@ -306,6 +336,12 @@ ALTER TABLE `room_chat`
 --
 
 --
+-- AUTO_INCREMENT untuk tabel `bahan_bimbingan`
+--
+ALTER TABLE `bahan_bimbingan`
+  MODIFY `id_bahan` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT untuk tabel `dosen`
 --
 ALTER TABLE `dosen`
@@ -333,7 +369,7 @@ ALTER TABLE `jadwal_skripsi`
 -- AUTO_INCREMENT untuk tabel `judul`
 --
 ALTER TABLE `judul`
-  MODIFY `id_judul` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_judul` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `mahasiswa`
