@@ -41,22 +41,23 @@ class JadwalBimbinganProvider {
   //   return data;
   // }
 
-  // Future accJudul(BuildContext context, int idMahasiswa, String judul,
-  //     int idDospem1, idDospem2, idProposal) async {
-  //   final result = await http.post(link.Link.kaprodi + "accJudul.php", body: {
-  //     "id_mahasiswa": idMahasiswa.toString(),
-  //     "id_proposal": idProposal.toString(),
-  //     "judul": judul,
-  //     "id_dospem1": idDospem1.toString(),
-  //     "id_dospem2": idDospem2.toString(),
-  //   });
-  //   final response = await json.decode(result.body);
-  //   int value = response['value'];
-  //   String pesan = response['message'];
-  //   if (value == 1) {
-  //     messageSuccess(context, pesan);
-  //   } else {
-  //     messageDanger(context, pesan);
-  //   }
-  // }
+  Future addJadwalBimbingan(BuildContext context, int idDosen,
+      String jadwalMulai, jadwalSelesai, keterangan) async {
+    final result =
+        await http.post(link.Link.dosen + "addJadwalPembimbing.php", body: {
+      "id_dosen": idDosen.toString(),
+      "mulai": jadwalMulai.toString(),
+      "akhir": jadwalSelesai.toString(),
+      "keterangan": keterangan,
+    });
+    final response = await json.decode(result.body);
+    int value = response['value'];
+    String pesan = response['message'];
+    if (value == 1) {
+      messageSuccess(context, pesan);
+      popPage(context);
+    } else {
+      messageDanger(context, pesan);
+    }
+  }
 }

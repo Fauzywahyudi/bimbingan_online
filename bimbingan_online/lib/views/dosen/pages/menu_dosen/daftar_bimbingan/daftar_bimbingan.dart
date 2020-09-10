@@ -5,6 +5,8 @@ import 'package:bimbingan_online/providers/jadwal_bimbingan_provider.dart';
 import 'package:bimbingan_online/utils/assets.dart';
 import 'package:flutter/material.dart';
 
+import 'tambah_jadwal_bimbingan.dart';
+
 class DaftarBimbingan extends StatefulWidget {
   static const routeName = '/DaftarBimbinganDosen';
   @override
@@ -45,8 +47,9 @@ class _DaftarBimbinganState extends State<DaftarBimbingan>
       appBar: _buildAppBar(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {
-          // pushNamePage(context, route)
+        onPressed: () async {
+          await pushNamePage(context, TambahJadwalBimbingan.routeName);
+          handleRefresh();
         },
       ),
       body: TabBarView(
