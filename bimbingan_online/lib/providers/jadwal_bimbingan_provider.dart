@@ -60,4 +60,19 @@ class JadwalBimbinganProvider {
       messageDanger(context, pesan);
     }
   }
+
+  Future setSelesaiJadwal(BuildContext context, int idBimbingan) async {
+    final result =
+        await http.post(link.Link.dosen + "setSelesaiJadwal.php", body: {
+      "id_bimbingan": idBimbingan.toString(),
+    });
+    final response = await json.decode(result.body);
+    int value = response['value'];
+    String pesan = response['message'];
+    if (value == 1) {
+      messageSuccess(context, pesan);
+    } else {
+      messageDanger(context, pesan);
+    }
+  }
 }
