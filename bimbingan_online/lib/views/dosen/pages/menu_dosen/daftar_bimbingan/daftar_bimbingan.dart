@@ -41,6 +41,12 @@ class _DaftarBimbinganState extends State<DaftarBimbingan>
     return completer.future;
   }
 
+  void _selesai(int idBimbingan) async {
+    JadwalBimbinganProvider _jadwalBimbingan = JadwalBimbinganProvider();
+    await _jadwalBimbingan.setSelesaiJadwal(context, idBimbingan);
+    handleRefresh();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,14 +103,56 @@ class _DaftarBimbinganState extends State<DaftarBimbingan>
                   child: ListView.builder(
                     itemCount: snapshot.data.length,
                     itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text("Bimbingan ke-${index + 1}"),
-                      );
+                      return _itemListJadwal(snapshot.data[index], false);
                     },
                   ),
                 )
               : Center(child: CircularProgressIndicator());
         },
+      ),
+    );
+  }
+
+  Card _itemListJadwal(var data, bool selesai) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListTile(
+          leading: selesai
+              ? Icon(
+                  Icons.check_box,
+                  color: colSuccess,
+                )
+              : Icon(
+                  Icons.schedule,
+                  color: colPrimary,
+                ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                  "Mulai: ${formatJam(data['jadwal_mulai'])} WIB,  ${formatTanggal(data['jadwal_mulai'])}"),
+              SizedBox(height: 10),
+              Text(
+                  "Selesai: ${formatJam(data['jadwal_selesai'])} WIB,  ${formatTanggal(data['jadwal_selesai'])}"),
+            ],
+          ),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(data['keterangan']),
+              Divider(),
+            ],
+          ),
+          trailing: selesai
+              ? null
+              : IconButton(
+                  color: colSuccess,
+                  icon: Icon(Icons.check),
+                  onPressed: () => _selesai(int.parse(data['id_bimbingan'])),
+                  tooltip: "Selesai",
+                ),
+        ),
       ),
     );
   }
@@ -121,9 +169,7 @@ class _DaftarBimbinganState extends State<DaftarBimbingan>
                   child: ListView.builder(
                     itemCount: snapshot.data.length,
                     itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text("Bimbingan ke-${index + 1}"),
-                      );
+                      return _itemListJadwal(snapshot.data[index], true);
                     },
                   ),
                 )
