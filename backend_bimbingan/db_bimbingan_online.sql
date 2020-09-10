@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 07 Sep 2020 pada 23.21
+-- Waktu pembuatan: 10 Sep 2020 pada 10.36
 -- Versi server: 10.4.13-MariaDB
 -- Versi PHP: 7.4.8
 
@@ -95,9 +95,18 @@ CREATE TABLE `jadwal_bimbingan` (
   `id_dosen` int(11) NOT NULL,
   `jadwal_mulai` datetime NOT NULL,
   `jadwal_selesai` datetime NOT NULL,
-  `status` varchar(15) NOT NULL,
+  `status` varchar(15) NOT NULL DEFAULT 'Akan Datang',
   `keterangan` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `jadwal_bimbingan`
+--
+
+INSERT INTO `jadwal_bimbingan` (`id_bimbingan`, `id_dosen`, `jadwal_mulai`, `jadwal_selesai`, `status`, `keterangan`) VALUES
+(1, 1, '2020-09-10 11:14:00', '2020-09-10 11:14:00', 'Selesai', 'asdasd'),
+(2, 1, '2020-09-10 11:15:00', '2020-09-10 11:15:00', 'Akan Datang', 'asdsad'),
+(3, 1, '2020-09-11 11:17:00', '2020-09-12 11:17:00', 'Akan Datang', 'asdasd');
 
 -- --------------------------------------------------------
 
@@ -113,8 +122,16 @@ CREATE TABLE `jadwal_skripsi` (
   `id_mahasiswa` int(11) NOT NULL,
   `penguji` text NOT NULL,
   `keterangan` text NOT NULL,
-  `status` varchar(15) NOT NULL
+  `status` varchar(15) NOT NULL DEFAULT 'Akan Datang'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='jadwal seminar & kompre';
+
+--
+-- Dumping data untuk tabel `jadwal_skripsi`
+--
+
+INSERT INTO `jadwal_skripsi` (`id_jadwal_skripsi`, `tipe_jadwal`, `jadwal_mulai`, `jadwal_selesai`, `id_mahasiswa`, `penguji`, `keterangan`, `status`) VALUES
+(1, 'Seminar', '2020-09-11 15:00:00', '2020-09-11 17:00:00', 5, 'Rini Sovia S.Kom., M.Kom.\r\nRandy Permana S.Kom., M.Kom.', 'ini keterangan ', 'Akan Datang'),
+(2, 'Kompre', '2020-09-15 15:00:00', '2020-09-15 17:00:00', 5, 'Rini Sovia S.Kom., M.Kom.', 'Keterangan', 'Akan Datang');
 
 -- --------------------------------------------------------
 
@@ -357,13 +374,13 @@ ALTER TABLE `info_pembimbing`
 -- AUTO_INCREMENT untuk tabel `jadwal_bimbingan`
 --
 ALTER TABLE `jadwal_bimbingan`
-  MODIFY `id_bimbingan` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_bimbingan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `jadwal_skripsi`
 --
 ALTER TABLE `jadwal_skripsi`
-  MODIFY `id_jadwal_skripsi` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_jadwal_skripsi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `judul`
