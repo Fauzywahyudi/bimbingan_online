@@ -1,3 +1,4 @@
+import 'views/dosen/pages/menu_dosen/daftar_bimbingan/tambah_jadwal_bimbingan.dart';
 import 'views/dosen/pages/menu_dosen/mahasiswa_bimbingan/mahasiswa_bimbingan.dart';
 import 'views/dosen/pages/fitur_kaprodi/pengumuman/tambah_pengumuman.dart';
 import 'views/dosen/pages/fitur_kaprodi/dosen/dosen_page.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         //fitur dosen
         MahasiswaBimbingan.routeName: (context) => MahasiswaBimbingan(),
         DaftarBimbingan.routeName: (context) => DaftarBimbingan(),
+        TambahJadwalBimbingan.routeName: (context) => TambahJadwalBimbingan(),
       },
       builder: BotToastInit(),
       theme: ThemeData(

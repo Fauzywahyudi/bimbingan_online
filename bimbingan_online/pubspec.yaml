@@ -40,6 +40,8 @@ dependencies:
   line_icons: ^0.2.0
   flutter_expanded_tile: ^0.2.1
   modal_bottom_sheet: ^0.2.0+1
+  datetime_picker_formfield: ^1.0.0
+  intl: ^0.16.1
 
 dev_dependencies:
   flutter_test:
