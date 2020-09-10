@@ -1,3 +1,4 @@
+import 'views/dosen/pages/fitur_kaprodi/kompre/kompre_page.dart';
 import 'views/dosen/pages/menu_dosen/daftar_bimbingan/tambah_jadwal_bimbingan.dart';
 import 'views/dosen/pages/menu_dosen/mahasiswa_bimbingan/mahasiswa_bimbingan.dart';
 import 'views/dosen/pages/fitur_kaprodi/pengumuman/tambah_pengumuman.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         DosenPage.routeName: (context) => DosenPage(),
         ProposalPage.routeName: (context) => ProposalPage(),
         PengumumanPage.routeName: (context) => PengumumanPage(),
+        KomprePage.routeName: (context) => KomprePage(),
         TambahPengumuman.routeName: (context) => TambahPengumuman(),
 
         //fitur dosen
