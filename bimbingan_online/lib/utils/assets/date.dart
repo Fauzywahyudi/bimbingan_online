@@ -54,6 +54,7 @@ String formatTanggal(String value) {
 
 String formatJam(String value) {
   DateTime date = DateTime.parse(value);
-  String result = date.hour.toString() + ":" + date.minute.toString();
+  String menit = date.minute < 10 ? "0" + date.minute.toString() : date.minute;
+  String result = date.hour.toString() + ":" + menit;
   return result;
 }
