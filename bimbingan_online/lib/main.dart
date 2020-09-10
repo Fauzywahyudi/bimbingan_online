@@ -10,6 +10,8 @@ import 'package:bimbingan_online/views/splashscreen.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'views/dosen/pages/menu_dosen/daftar_bimbingan/daftar_bimbingan.dart';
+import 'views/dosen/pages/menu_dosen/notifikasi_dosen/notifikasi_dosen.dart';
+import 'views/dosen/pages/menu_dosen/pesan_dosen/pesan_dosen.dart';
 
 void main() {
   runApp(MyApp());
@@ -35,6 +37,8 @@ class MyApp extends StatelessWidget {
 
         //fitur dosen
         MahasiswaBimbingan.routeName: (context) => MahasiswaBimbingan(),
+        PesanDosen.routeName: (context) => PesanDosen(),
+        NotifikasiDosen.routeName: (context) => NotifikasiDosen(),
         DaftarBimbingan.routeName: (context) => DaftarBimbingan(),
         TambahJadwalBimbingan.routeName: (context) => TambahJadwalBimbingan(),
       },
