@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bimbingan_online/models/shared_preferenced.dart';
 import 'package:bimbingan_online/providers/jadwal_bimbingan_provider.dart';
 import 'package:bimbingan_online/utils/assets.dart';
+import 'package:bimbingan_online/views/dosen/pages/menu_dosen/daftar_bimbingan/detail_bimbingan.dart';
 import 'package:flutter/material.dart';
 
 import 'tambah_jadwal_bimbingan.dart';
@@ -127,14 +128,13 @@ class _DaftarBimbinganState extends State<DaftarBimbingan>
                   Icons.schedule,
                   color: colPrimary,
                 ),
-          subtitle: Column(
+          subtitle: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                  "Mulai: ${formatJam(data['jadwal_mulai'])} WIB,  ${formatTanggal(data['jadwal_mulai'])}"),
-              SizedBox(height: 10),
-              Text(
-                  "Selesai: ${formatJam(data['jadwal_selesai'])} WIB,  ${formatTanggal(data['jadwal_selesai'])}"),
+                  "${formatJam(data['jadwal_mulai'])} - ${formatJam(data['jadwal_selesai'])} WIB"),
+              Expanded(child: Container()),
+              Text("${formatTanggal(data['jadwal_selesai'])}"),
             ],
           ),
           title: Column(
@@ -152,6 +152,11 @@ class _DaftarBimbinganState extends State<DaftarBimbingan>
                   onPressed: () => _selesai(int.parse(data['id_bimbingan'])),
                   tooltip: "Selesai",
                 ),
+          onTap: () => pushPage(
+              context,
+              DetailBimbingan(
+                data: data,
+              )),
         ),
       ),
     );
