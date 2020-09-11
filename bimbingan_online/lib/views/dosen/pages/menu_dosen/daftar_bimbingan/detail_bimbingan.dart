@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:bimbingan_online/models/shared_preferenced.dart';
 import 'package:bimbingan_online/providers/bahan_bimbingan.dart';
 import 'package:bimbingan_online/utils/assets.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +15,22 @@ class DetailBimbingan extends StatefulWidget {
 }
 
 class _DetailBimbinganState extends State<DetailBimbingan> {
+  BahanBimbinganProvider _bahanBimbinganProvider = BahanBimbinganProvider();
+  DataShared _dataShared = DataShared();
+
   Future<List> _getBahan(String status) async {
-    BahanBimbinganProvider bahanBimbinganProvider = BahanBimbinganProvider();
-    final result = await bahanBimbinganProvider.getBahanBimbinganByDosen(
+    final result = await _bahanBimbinganProvider.getBahanBimbinganByDosen(
         context, int.parse(widget.data['id_bimbingan']), status);
     return result;
+  }
+
+  Future<Null> handleRefresh() async {
+    Completer<Null> completer = new Completer<Null>();
+    new Future.delayed(new Duration(milliseconds: 500)).then((_) {
+      completer.complete();
+      setState(() {});
+    });
+    return completer.future;
   }
 
   @override
@@ -81,11 +95,14 @@ class _DetailBimbinganState extends State<DetailBimbingan> {
                   builder: (context, snapshot) {
                     if (snapshot.hasError) print(snapshot.error);
                     return snapshot.hasData
-                        ? ListView.builder(
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (context, index) {
-                              return _itemList(snapshot, index);
-                            },
+                        ? RefreshIndicator(
+                            onRefresh: handleRefresh,
+                            child: ListView.builder(
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (context, index) {
+                                return _itemList(snapshot.data[index]);
+                              },
+                            ),
                           )
                         : Center(child: CircularProgressIndicator());
                   },
@@ -98,16 +115,16 @@ class _DetailBimbinganState extends State<DetailBimbingan> {
     );
   }
 
-  Widget _itemList(AsyncSnapshot<List> snapshot, int index) {
+  Widget _itemList(var data) {
     return ExpansionTile(
       leading: Icon(Icons.person),
-      title: Text(snapshot.data[index]['nama_mahasiswa']),
-      subtitle: Text("NIM : " + snapshot.data[index]['nim_mahasiswa']),
+      title: Text(data['nama_mahasiswa']),
+      subtitle: Text("NIM : " + data['nim_mahasiswa']),
       children: <Widget>[
         ListTile(
           leading: Icon(Icons.description),
-          title: Text("Bab " + snapshot.data[index]['bab']),
-          subtitle: Text(snapshot.data[index]['keterangan']),
+          title: Text("Bab " + data['bab']),
+          subtitle: Text(data['keterangan']),
           trailing: IconButton(
             color: colSuccess,
             icon: Icon(Icons.file_download),
@@ -121,7 +138,12 @@ class _DetailBimbinganState extends State<DetailBimbingan> {
               borderSide: BorderSide(color: colSuccess),
               textColor: colSuccess,
               color: colSuccess,
-              onPressed: () {},
+              onPressed: () async {
+                int idDosen = await _dataShared.getId();
+                await _bahanBimbinganProvider.konfirmasiBahan(
+                    context, int.parse(data['id_bahan']), idDosen, "Acc");
+                handleRefresh();
+              },
               child: Text(
                 "Acc",
               ),
@@ -130,7 +152,12 @@ class _DetailBimbinganState extends State<DetailBimbingan> {
               borderSide: BorderSide(color: colInfo),
               color: colInfo,
               textColor: colInfo,
-              onPressed: () {},
+              onPressed: () async {
+                int idDosen = await _dataShared.getId();
+                await _bahanBimbinganProvider.konfirmasiBahan(
+                    context, int.parse(data['id_bahan']), idDosen, "Revisi");
+                handleRefresh();
+              },
               child: Text(
                 "Revisi",
               ),
