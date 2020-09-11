@@ -1,6 +1,7 @@
 import 'package:bimbingan_online/providers/bahan_bimbingan.dart';
 import 'package:bimbingan_online/utils/assets.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class DetailBimbingan extends StatefulWidget {
   final data;
@@ -34,7 +35,44 @@ class _DetailBimbinganState extends State<DetailBimbingan> {
             children: [
               Container(
                 color: colPrimary,
-                height: 200,
+                width: mediaSize.width,
+                child: Column(
+                  children: [
+                    ListTile(
+                      leading: Icon(Icons.schedule, color: colLight),
+                      title: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${formatJam(widget.data['jadwal_mulai'])} - ${formatJam(widget.data['jadwal_selesai'])} WIB",
+                            style: GoogleFonts.mcLaren(
+                                fontSize: 18, color: colLight),
+                          ),
+                          Expanded(child: Container()),
+                          Text(
+                            "${formatTanggal(widget.data['jadwal_selesai'])}",
+                            style: GoogleFonts.mcLaren(
+                                fontSize: 18, color: colLight),
+                          ),
+                        ],
+                      ),
+                      subtitle: Text(
+                        widget.data['status'],
+                        style: textLight.copyWith(fontSize: 18),
+                      ),
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.info,
+                        color: colLight,
+                      ),
+                      title: Text(
+                        widget.data['keterangan'],
+                        style: textLight.copyWith(fontSize: 18),
+                      ),
+                    )
+                  ],
+                ),
               ),
               Container(
                 height: mediaSize.height,
@@ -75,7 +113,30 @@ class _DetailBimbinganState extends State<DetailBimbingan> {
             icon: Icon(Icons.file_download),
             onPressed: () {},
           ),
-        )
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            OutlineButton(
+              borderSide: BorderSide(color: colSuccess),
+              textColor: colSuccess,
+              color: colSuccess,
+              onPressed: () {},
+              child: Text(
+                "Acc",
+              ),
+            ),
+            OutlineButton(
+              borderSide: BorderSide(color: colInfo),
+              color: colInfo,
+              textColor: colInfo,
+              onPressed: () {},
+              child: Text(
+                "Revisi",
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
