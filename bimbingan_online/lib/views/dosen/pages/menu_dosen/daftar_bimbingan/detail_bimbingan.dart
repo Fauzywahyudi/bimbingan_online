@@ -4,6 +4,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:bimbingan_online/models/shared_preferenced.dart';
 import 'package:bimbingan_online/providers/bahan_bimbingan.dart';
 import 'package:bimbingan_online/utils/assets.dart';
+import 'package:bimbingan_online/views/dosen/pages/menu_dosen/daftar_bimbingan/komentar_bahan.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -212,9 +213,11 @@ class _DetailBimbinganState extends State<DetailBimbingan> {
                     color: colPrimary,
                     textColor: colPrimary,
                     onPressed: () async {
-                      int idDosen = await _dataShared.getId();
-                      await _bahanBimbinganProvider.konfirmasiBahan(context,
-                          int.parse(data['id_bahan']), idDosen, "Revisi");
+                      pushPage(
+                          context,
+                          KomentarBahan(
+                            data: data,
+                          ));
                       handleRefresh();
                     },
                     icon: Icon(Icons.comment),
