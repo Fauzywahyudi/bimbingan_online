@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:bimbingan_online/models/shared_preferenced.dart';
 import 'package:bimbingan_online/providers/bahan_bimbingan.dart';
 import 'package:bimbingan_online/utils/assets.dart';
@@ -17,6 +18,8 @@ class DetailBimbingan extends StatefulWidget {
 class _DetailBimbinganState extends State<DetailBimbingan> {
   BahanBimbinganProvider _bahanBimbinganProvider = BahanBimbinganProvider();
   DataShared _dataShared = DataShared();
+  var _tecPesan = TextEditingController();
+  String _filter = "Belum dibaca";
 
   Future<List> _getBahan(String status) async {
     final result = await _bahanBimbinganProvider.getBahanBimbinganByDosen(
@@ -41,6 +44,28 @@ class _DetailBimbinganState extends State<DetailBimbingan> {
       appBar: AppBar(
         title: Text("Bimbingan"),
         elevation: 0,
+        actions: [
+          IconButton(
+              icon: PopupMenuButton(
+                tooltip: "Urut berdasarkan",
+                icon: Icon(Icons.filter_list),
+                itemBuilder: (_) => <PopupMenuItem<String>>[
+                  PopupMenuItem<String>(
+                      child: const Text('Belum diperiksa'),
+                      value: 'Belum dibaca'),
+                  PopupMenuItem<String>(child: const Text('Acc'), value: 'Acc'),
+                  PopupMenuItem<String>(
+                      child: const Text('Revisi'), value: 'Revisi'),
+                ],
+                onSelected: (v) {
+                  setState(() {
+                    _filter = v;
+                    handleRefresh();
+                  });
+                },
+              ),
+              onPressed: () {}),
+        ],
       ),
       body: Container(
         color: colLight,
@@ -84,14 +109,24 @@ class _DetailBimbinganState extends State<DetailBimbingan> {
                         widget.data['keterangan'],
                         style: textLight.copyWith(fontSize: 18),
                       ),
-                    )
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.filter_list,
+                        color: colLight,
+                      ),
+                      title: Text(
+                        _filter,
+                        style: textLight.copyWith(fontSize: 18),
+                      ),
+                    ),
                   ],
                 ),
               ),
               Container(
                 height: mediaSize.height,
                 child: FutureBuilder<List>(
-                  future: _getBahan("Belum dibaca"),
+                  future: _getBahan(_filter),
                   builder: (context, snapshot) {
                     if (snapshot.hasError) print(snapshot.error);
                     return snapshot.hasData
@@ -116,8 +151,12 @@ class _DetailBimbinganState extends State<DetailBimbingan> {
   }
 
   Widget _itemList(var data) {
+    var status = data['status_bahan'];
     return ExpansionTile(
-      leading: Icon(Icons.person),
+      key: ValueKey(data['id_bahan']),
+      leading: status == "Belum dibaca"
+          ? Icon(Icons.schedule)
+          : status == "Acc" ? Icon(Icons.check) : Icon(Icons.refresh),
       title: Text(data['nama_mahasiswa']),
       subtitle: Text("NIM : " + data['nim_mahasiswa']),
       children: <Widget>[
@@ -131,39 +170,58 @@ class _DetailBimbinganState extends State<DetailBimbingan> {
             onPressed: () {},
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            OutlineButton(
-              borderSide: BorderSide(color: colSuccess),
-              textColor: colSuccess,
-              color: colSuccess,
-              onPressed: () async {
-                int idDosen = await _dataShared.getId();
-                await _bahanBimbinganProvider.konfirmasiBahan(
-                    context, int.parse(data['id_bahan']), idDosen, "Acc");
-                handleRefresh();
-              },
-              child: Text(
-                "Acc",
+        status == "Belum dibaca"
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  OutlineButton(
+                    borderSide: BorderSide(color: colSuccess),
+                    textColor: colSuccess,
+                    color: colSuccess,
+                    onPressed: () async {
+                      int idDosen = await _dataShared.getId();
+                      await _bahanBimbinganProvider.konfirmasiBahan(
+                          context, int.parse(data['id_bahan']), idDosen, "Acc");
+                      handleRefresh();
+                    },
+                    child: Text(
+                      "Acc",
+                    ),
+                  ),
+                  OutlineButton(
+                    borderSide: BorderSide(color: colInfo),
+                    color: colInfo,
+                    textColor: colInfo,
+                    onPressed: () async {
+                      int idDosen = await _dataShared.getId();
+                      await _bahanBimbinganProvider.konfirmasiBahan(context,
+                          int.parse(data['id_bahan']), idDosen, "Revisi");
+                      handleRefresh();
+                    },
+                    child: Text(
+                      "Revisi",
+                    ),
+                  ),
+                ],
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  OutlineButton.icon(
+                    borderSide: BorderSide(color: colPrimary),
+                    color: colPrimary,
+                    textColor: colPrimary,
+                    onPressed: () async {
+                      int idDosen = await _dataShared.getId();
+                      await _bahanBimbinganProvider.konfirmasiBahan(context,
+                          int.parse(data['id_bahan']), idDosen, "Revisi");
+                      handleRefresh();
+                    },
+                    icon: Icon(Icons.comment),
+                    label: Text("Pesan"),
+                  ),
+                ],
               ),
-            ),
-            OutlineButton(
-              borderSide: BorderSide(color: colInfo),
-              color: colInfo,
-              textColor: colInfo,
-              onPressed: () async {
-                int idDosen = await _dataShared.getId();
-                await _bahanBimbinganProvider.konfirmasiBahan(
-                    context, int.parse(data['id_bahan']), idDosen, "Revisi");
-                handleRefresh();
-              },
-              child: Text(
-                "Revisi",
-              ),
-            ),
-          ],
-        ),
       ],
     );
   }

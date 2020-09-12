@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id_bimbingan = $_POST['id_bimbingan'];
     $status = $_POST['status'];
 
-    $sql = $kon->query("SELECT * FROM bahan_bimbingan INNER JOIN mahasiswa ON bahan_bimbingan.id_mahasiswa=mahasiswa.id_mahasiswa WHERE bahan_bimbingan.id_bimbingan='$id_bimbingan' AND bahan_bimbingan.status='$status'");
+    $sql = $kon->query("SELECT * FROM bahan_bimbingan INNER JOIN mahasiswa ON bahan_bimbingan.id_mahasiswa=mahasiswa.id_mahasiswa WHERE bahan_bimbingan.id_bimbingan='$id_bimbingan' AND bahan_bimbingan.status_bahan='$status'");
 
     while ($fetchData = $sql->fetch_array()) {
         $data[] = $fetchData;

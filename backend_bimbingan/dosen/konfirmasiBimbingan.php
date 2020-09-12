@@ -16,7 +16,7 @@ function accBahan($status)
     $id_bahan = $_POST['id_bahan'];
     $id_dosen = $_POST['id_dosen'];
 
-    $sql = $kon->query("UPDATE bahan_bimbingan SET status='$status' WHERE id_bahan='$id_bahan'");
+    $sql = $kon->query("UPDATE bahan_bimbingan SET status_bahan='$status' WHERE id_bahan='$id_bahan'");
     $sqlBahan = $kon->query("SELECT * FROM bahan_bimbingan WHERE id_bahan='$id_bahan'");
     $dataBahan = $sqlBahan->fetch_array();
 
@@ -40,7 +40,7 @@ function revisiBahan($status)
     $id_bahan = $_POST['id_bahan'];
     $id_dosen = $_POST['id_dosen'];
 
-    $sql = $kon->query("UPDATE bahan_bimbingan SET status='$status' WHERE id_bahan='$id_bahan'");
+    $sql = $kon->query("UPDATE bahan_bimbingan SET status_bahan='$status' WHERE id_bahan='$id_bahan'");
     $sqlBahan = $kon->query("SELECT * FROM bahan_bimbingan WHERE id_bahan='$id_bahan'");
     $dataBahan = $sqlBahan->fetch_array();
 
