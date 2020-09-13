@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bimbingan_online/providers/jadwal_skripsi_provider.dart';
 import 'package:bimbingan_online/utils/assets.dart';
+import 'package:bimbingan_online/views/dosen/pages/fitur_kaprodi/kompre/add_jadwal_kompre.dart';
 import 'package:flutter/material.dart';
 
 class KomprePage extends StatefulWidget {
@@ -47,7 +48,10 @@ class _KomprePageState extends State<KomprePage> with TickerProviderStateMixin {
   FloatingActionButton _buildFab() {
     return FloatingActionButton(
       child: Icon(Icons.add),
-      onPressed: () {},
+      onPressed: () async {
+        await pushPage(context, AddJadwalKompre());
+        handleRefresh();
+      },
       tooltip: "Tambah Jadwal",
     );
   }
@@ -74,7 +78,7 @@ class _KomprePageState extends State<KomprePage> with TickerProviderStateMixin {
   Widget _buildSeminar() {
     return Container(
       child: FutureBuilder<List>(
-        future: _jadwalSkripsiProvider.getJadwalSkripsi(context, "Seminar"),
+        future: _jadwalSkripsiProvider.getJadwalSkripsi(context, "Sempro"),
         builder: (context, snapshot) {
           if (snapshot.hasError) print(snapshot.error);
           return snapshot.hasData
