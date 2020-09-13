@@ -12,6 +12,9 @@ import 'package:flutter/material.dart';
 import 'views/dosen/pages/menu_dosen/daftar_bimbingan/daftar_bimbingan.dart';
 import 'views/dosen/pages/menu_dosen/notifikasi_dosen/notifikasi_dosen.dart';
 import 'views/dosen/pages/menu_dosen/pesan_dosen/pesan_dosen.dart';
+import 'views/mahasiswa/pages/jadwalBimbingan/ProgresBimbingan.dart';
+import 'views/mahasiswa/pages/pengajuanProposal/daftarProposal.dart';
+import 'views/mahasiswa/pages/skripsi/informasi_skripsi.dart';
 
 void main() {
   runApp(MyApp());
@@ -41,6 +44,11 @@ class MyApp extends StatelessWidget {
         NotifikasiDosen.routeName: (context) => NotifikasiDosen(),
         DaftarBimbingan.routeName: (context) => DaftarBimbingan(),
         TambahJadwalBimbingan.routeName: (context) => TambahJadwalBimbingan(),
+
+        //mahasiswa
+        DaftarProposal.routeName: (context) => DaftarProposal(),
+        ProgresBimbingan.routeName: (context) => ProgresBimbingan(),
+        InformasiSkripsi.routeName: (context) => InformasiSkripsi(),
       },
       builder: BotToastInit(),
       theme: ThemeData(
