@@ -1,12 +1,17 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:bimbingan_online/models/shared_preferenced.dart';
 import 'package:bimbingan_online/providers/bahan_bimbingan.dart';
 import 'package:bimbingan_online/utils/assets.dart';
 import 'package:bimbingan_online/views/dosen/pages/menu_dosen/daftar_bimbingan/komentar_bahan.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:bimbingan_online/utils/link.dart' as link;
 
 class DetailBimbingan extends StatefulWidget {
   final data;
@@ -21,6 +26,7 @@ class _DetailBimbinganState extends State<DetailBimbingan> {
   DataShared _dataShared = DataShared();
   var _tecPesan = TextEditingController();
   String _filter = "Belum dibaca";
+  Dio dio = Dio();
 
   Future<List> _getBahan(String status) async {
     final result = await _bahanBimbinganProvider.getBahanBimbinganByDosen(
@@ -35,6 +41,55 @@ class _DetailBimbinganState extends State<DetailBimbingan> {
       setState(() {});
     });
     return completer.future;
+  }
+
+  void showDownloadProgress(received, total) {
+    if (total != -1) {
+      print((received / total * 100).toStringAsFixed(0) + "%");
+    }
+  }
+
+  Future download2(Dio dio, String url, String savePath) async {
+    try {
+      Response response = await dio.get(
+        url,
+        onReceiveProgress: showDownloadProgress,
+        //Received data with List<int>
+        options: Options(
+            responseType: ResponseType.bytes,
+            followRedirects: false,
+            validateStatus: (status) {
+              return status < 500;
+            }),
+      );
+      print(response.headers);
+      File file = File(savePath);
+      var raf = file.openSync(mode: FileMode.write);
+      List dataPath = savePath.split("0");
+      // response.data is List<int> type
+      raf.writeFromSync(response.data);
+      await raf.close();
+
+      messageFile(
+          context, "Berhasil didownload\nFile tersimpan di \n${dataPath.last}");
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future _downloadDoc(String fileName) async {
+    if (await Permission.storage.request().isGranted) {
+      var tempDir = await getExternalStorageDirectory();
+      print(tempDir.path);
+      List data = tempDir.path.split("0");
+      String _downloadDir = data.first + "0/Download/";
+      String fullPath = _downloadDir + fileName;
+      print('full path ${fullPath}');
+      String url = link.Link.bahan + fileName;
+      print(url);
+
+      download2(dio, url, fullPath);
+    }
   }
 
   @override
@@ -168,7 +223,7 @@ class _DetailBimbinganState extends State<DetailBimbingan> {
           trailing: IconButton(
             color: colSuccess,
             icon: Icon(Icons.file_download),
-            onPressed: () {},
+            onPressed: () => _downloadDoc(data['file']),
           ),
         ),
         status == "Belum dibaca"
