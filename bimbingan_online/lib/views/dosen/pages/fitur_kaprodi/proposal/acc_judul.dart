@@ -1,12 +1,17 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bimbingan_online/providers/dosen_provider.dart';
 import 'package:bimbingan_online/providers/judul_provider.dart';
 import 'package:bimbingan_online/utils/assets.dart';
 import 'package:bimbingan_online/utils/assets/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:http/http.dart' as http;
+import 'package:bimbingan_online/utils/link.dart' as link;
+import 'package:path_provider/path_provider.dart';
 
 class AccJudul extends StatefulWidget {
   final data;
@@ -45,6 +50,28 @@ class _AccJudulState extends State<AccJudul> {
         _pembimbing2 = list['nama_dosen'] + " " + list['gelar'];
       }
     });
+  }
+
+  // void _download() async {
+  //   final taskId = await FlutterDownloader.enqueue(
+  //     url: 'your download link',
+  //     savedDir: 'the path of directory where you want to save downloaded files',
+  //     showNotification:
+  //         true, // show download progress in status bar (for Android)
+  //     openFileFromNotification:
+  //         true, // click on notification to open downloaded file (for Android)
+  //   );
+  // }
+
+  Future<File> _downloadFile(String filename) async {
+    http.Client client = new http.Client();
+    var req = await client
+        .get(link.Link.proposal + "downloadProposal.php?file=$filename");
+    var bytes = req.bodyBytes;
+    String dir = (await getApplicationDocumentsDirectory()).path;
+    File file = new File('$dir/$filename');
+    await file.writeAsBytes(bytes);
+    return file;
   }
 
   var _boxDecor = BoxDecoration(
@@ -192,7 +219,7 @@ class _AccJudulState extends State<AccJudul> {
                       Icons.note_add,
                       trailing: IconButton(
                         icon: Icon(Icons.file_download),
-                        onPressed: () {},
+                        onPressed: () => _downloadFile(widget.data['file']),
                       ),
                     ),
                   ],

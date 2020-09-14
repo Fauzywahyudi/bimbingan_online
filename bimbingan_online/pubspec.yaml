@@ -42,6 +42,8 @@ dependencies:
   modal_bottom_sheet: ^0.2.0+1
   datetime_picker_formfield: ^1.0.0
   intl: ^0.16.1
+  flutter_downloader: ^1.5.0
+  path_provider: ^1.6.14
 
 dev_dependencies:
   flutter_test:

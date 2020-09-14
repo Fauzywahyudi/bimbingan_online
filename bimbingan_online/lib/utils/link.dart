@@ -9,4 +9,8 @@ class Link {
       "http://10.0.2.2/bimbingan_online/backend_bimbingan/dosen/kaprodi/";
   static final String mahasiswa =
       "http://10.0.2.2/bimbingan_online/backend_bimbingan/mahasiswa/";
+  static final String bahan =
+      "http://10.0.2.2/bimbingan_online/backend_bimbingan/dokumen/bahan/";
+  static final String proposal =
+      "http://10.0.2.2/bimbingan_online/backend_bimbingan/dokumen/proposal/";
 }

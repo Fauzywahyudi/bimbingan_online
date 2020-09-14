@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PengumumanPage extends StatefulWidget {
-  static const routeName = '/PengumumanPage';
+  static const routeName = '/InformasiPage';
   @override
   _PengumumanPageState createState() => _PengumumanPageState();
 }
@@ -53,13 +53,38 @@ class _PengumumanPageState extends State<PengumumanPage> {
                     child: ListView.builder(
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, index) {
-                        return ListTile(
-                          leading: Icon(Icons.person),
+                        return ExpansionTile(
+                          leading: Icon(Icons.info),
                           title: Text(
                             snapshot.data[index]['judul_pengumuman'],
                             style: GoogleFonts.mcLaren(),
                           ),
-                          subtitle: Text(snapshot.data[index]['tgl_post']),
+                          // subtitle: Text(snapshot.data[index]['tgl_post']),
+                          children: [
+                            ListTile(
+                              leading: Icon(Icons.stop),
+                              title:
+                                  Text(snapshot.data[index]['tipe_pengumuman']),
+                              subtitle: Text("Tipe"),
+                            ),
+                            ListTile(
+                              leading: Icon(Icons.stop),
+                              title: Text(snapshot.data[index]['status']),
+                              subtitle: Text("Status"),
+                            ),
+                            ListTile(
+                              leading: Icon(Icons.stop),
+                              title: Text(snapshot.data[index]['keterangan']),
+                              subtitle: Text("Keterangan"),
+                            ),
+                            // ListTile(
+                            //   title: Text(formatJam(snapshot.data[index]
+                            //           ['tgl_post'] +
+                            //       " " +
+                            //       formatTanggal(
+                            //           snapshot.data[index]['tgl_post']))),
+                            // ),
+                          ],
                         );
                       },
                     ),
