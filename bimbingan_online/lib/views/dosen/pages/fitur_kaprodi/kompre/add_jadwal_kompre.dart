@@ -1,12 +1,11 @@
 import 'dart:async';
-
+import 'package:bimbingan_online/models/jadwal_skripsi_model.dart';
 import 'package:bimbingan_online/providers/dosen_provider.dart';
-import 'package:bimbingan_online/providers/judul_provider.dart';
+import 'package:bimbingan_online/providers/jadwal_skripsi_provider.dart';
 import 'package:bimbingan_online/providers/mahasiswa_provider.dart';
 import 'package:bimbingan_online/utils/assets.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
@@ -26,7 +25,6 @@ class _AddJadwalKompreState extends State<AddJadwalKompre> {
   String _mahasiswa = "";
   String _nim = "";
   DosenProvider _dosenProvider = DosenProvider();
-  JudulProvider _judulProvider = JudulProvider();
   MahasiswaProvider _mahasiswaProvider = MahasiswaProvider();
   int _idPembimbing1;
   int _idPembimbing2;
@@ -269,7 +267,32 @@ class _AddJadwalKompreState extends State<AddJadwalKompre> {
     );
   }
 
-  void _addJadwal() async {}
+  bool _validasi() {
+    if (_tecMulai.text.isEmpty) return false;
+    if (_tecAkhir.text.isEmpty) return false;
+    if (_tecKeterangan.text.isEmpty) return false;
+    if (_idMahasiswa == null) return false;
+    if (_pembimbing1.isEmpty) return false;
+    if (_currentJurusan == "Seminar Proposal" && _pembimbing2.isEmpty)
+      return false;
+    return true;
+  }
+
+  void _addJadwal() async {
+    if (_validasi()) {
+      JadwalSkripsiProvider provider = JadwalSkripsiProvider();
+      ModelJadwalSkripsi jadwalSkripsi = ModelJadwalSkripsi(
+          _idMahasiswa,
+          _currentJurusan,
+          _tecMulai.text,
+          _tecAkhir.text,
+          _pembimbing1 + "|" + _pembimbing2,
+          _tecKeterangan.text);
+      await provider.addJadwalSkripsi(context, jadwalSkripsi);
+    } else {
+      messageInfo(context, "Harap isi semua data!");
+    }
+  }
 
   @override
   void initState() {
