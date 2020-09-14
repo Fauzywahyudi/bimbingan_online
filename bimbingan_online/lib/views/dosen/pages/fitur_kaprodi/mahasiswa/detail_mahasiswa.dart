@@ -11,11 +11,11 @@ class DetailMahasiswa extends StatefulWidget {
 
 class _DetailMahasiswaState extends State<DetailMahasiswa>
     with TickerProviderStateMixin {
-  TabController tabController;
+  // TabController tabController;
 
   @override
   void initState() {
-    tabController = new TabController(length: 3, vsync: this);
+    // tabController = new TabController(length: 3, vsync: this);
     super.initState();
   }
 
@@ -24,29 +24,30 @@ class _DetailMahasiswaState extends State<DetailMahasiswa>
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.data['nama_mahasiswa']),
-        bottom: TabBar(
-          controller: tabController,
-          labelColor: colLight,
-          indicatorColor: colPrimary,
-          indicatorWeight: 5,
-          onTap: (v) {
-            setState(() {});
-          },
-          tabs: <Widget>[
-            Tab(text: "Mahasiswa"),
-            Tab(text: "Skripsi"),
-            Tab(text: "Jadwal"),
-          ],
-        ),
+        // bottom: TabBar(
+        //   controller: tabController,
+        //   labelColor: colLight,
+        //   indicatorColor: colPrimary,
+        //   indicatorWeight: 5,
+        //   onTap: (v) {
+        //     setState(() {});
+        //   },
+        //   tabs: <Widget>[
+        //     Tab(text: "Mahasiswa"),
+        //     Tab(text: "Skripsi"),
+        //     Tab(text: "Jadwal"),
+        //   ],
+        // ),
       ),
-      body: TabBarView(
-        controller: tabController,
-        children: <Widget>[
-          _buildInfoMahasiswa(),
-          _buildInfoSkripsi(),
-          _buildInfoJadwal(),
-        ],
-      ),
+      body: _buildInfoMahasiswa(),
+      // body: TabBarView(
+      //   controller: tabController,
+      //   children: <Widget>[
+      //     _buildInfoMahasiswa(),
+      //     _buildInfoSkripsi(),
+      //     _buildInfoJadwal(),
+      //   ],
+      // ),
     );
   }
 
@@ -63,12 +64,12 @@ class _DetailMahasiswaState extends State<DetailMahasiswa>
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              height: 200,
-              decoration: BoxDecoration(
-                color: colPrimary,
-              ),
-            ),
+            // Container(
+            //   height: 200,
+            //   decoration: BoxDecoration(
+            //     color: colPrimary,
+            //   ),
+            // ),
             _buildListTile(
                 widget.data['nim_mahasiswa'], "NIM Mahasiswa", Icons.person),
             _buildListTile(

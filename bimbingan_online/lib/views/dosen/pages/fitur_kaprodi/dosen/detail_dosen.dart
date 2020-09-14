@@ -24,29 +24,30 @@ class _DetailDosenState extends State<DetailDosen>
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.data['nama_dosen']),
-        bottom: TabBar(
-          controller: tabController,
-          labelColor: colLight,
-          indicatorColor: colPrimary,
-          indicatorWeight: 5,
-          onTap: (v) {
-            setState(() {});
-          },
-          tabs: <Widget>[
-            Tab(text: "Informasi"),
-            Tab(text: "Mahasiswa"),
-            Tab(text: "Jadwal"),
-          ],
-        ),
+        // bottom: TabBar(
+        //   controller: tabController,
+        //   labelColor: colLight,
+        //   indicatorColor: colPrimary,
+        //   indicatorWeight: 5,
+        //   onTap: (v) {
+        //     setState(() {});
+        //   },
+        //   tabs: <Widget>[
+        //     Tab(text: "Informasi"),
+        //     Tab(text: "Mahasiswa"),
+        //     Tab(text: "Jadwal"),
+        //   ],
+        // ),
       ),
-      body: TabBarView(
-        controller: tabController,
-        children: <Widget>[
-          _buildInfoDosen(),
-          _buildInfoSkripsi(),
-          _buildInfoJadwal(),
-        ],
-      ),
+      body: _buildInfoDosen(),
+      // body: TabBarView(
+      //   controller: tabController,
+      //   children: <Widget>[
+      //     _buildInfoDosen(),
+      //     _buildInfoSkripsi(),
+      //     _buildInfoJadwal(),
+      //   ],
+      // ),
     );
   }
 
@@ -63,12 +64,6 @@ class _DetailDosenState extends State<DetailDosen>
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              height: 200,
-              decoration: BoxDecoration(
-                color: colPrimary,
-              ),
-            ),
             _buildListTile(
                 widget.data['nidn_dosen'], "NIDN DOsen", Icons.person),
             _buildListTile(
