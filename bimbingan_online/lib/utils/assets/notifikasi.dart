@@ -12,6 +12,17 @@ void messageInfo(BuildContext context, String notif) {
   );
 }
 
+void messageFile(BuildContext context, String notif) {
+  BotToast.showSimpleNotification(
+    duration: Duration(seconds: 5),
+    title: notif,
+    closeIcon: Icon(
+      Icons.info,
+      color: Colors.lightBlue,
+    ),
+  );
+}
+
 void messageDanger(BuildContext context, String notif) {
   BotToast.showSimpleNotification(
     title: notif,

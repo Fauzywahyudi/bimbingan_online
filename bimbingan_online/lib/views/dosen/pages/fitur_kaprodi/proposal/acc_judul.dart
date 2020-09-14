@@ -1,10 +1,14 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:isolate';
+import 'dart:ui';
 
 import 'package:bimbingan_online/providers/dosen_provider.dart';
 import 'package:bimbingan_online/providers/judul_provider.dart';
 import 'package:bimbingan_online/utils/assets.dart';
 import 'package:bimbingan_online/utils/assets/colors.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,6 +16,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:http/http.dart' as http;
 import 'package:bimbingan_online/utils/link.dart' as link;
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class AccJudul extends StatefulWidget {
   final data;
@@ -29,6 +34,8 @@ class _AccJudulState extends State<AccJudul> {
   JudulProvider _judulProvider = JudulProvider();
   int _idPembimbing1;
   int _idPembimbing2;
+  bool downloading = false;
+  var progressString = "";
 
   void _setPembimbing1(var list) {
     setState(() {
@@ -52,27 +59,81 @@ class _AccJudulState extends State<AccJudul> {
     });
   }
 
-  // void _download() async {
+  Future<void> downloadFile(String filename) async {
+    Dio dio = Dio();
+    try {
+      var dir = await getDownloadsDirectory();
+      await dio.download(
+          link.Link.proposal + filename, "${dir.path}/$filename");
+    } catch (e) {}
+
+    // try {
+    //   var dir = await getDownloadsDirectory();
+
+    //   await dio.download(link.Link.proposal+filename, "${dir.path}/$filename",
+    //   onProgress: (rec, total) {
+    //     print("Rec: $rec , Total: $total");
+
+    //     setState(() {
+    //       downloading = true;
+    //       progressString = ((rec / total) * 100).toStringAsFixed(0) + "%";
+    //     });
+    //   });
+    // } catch (e) {
+    //   print(e);
+    // }
+
+    // setState(() {
+    //   // downloading = false;
+    //   // progressString = "Completed";
+    // });
+    // print("Download completed");
+  }
+  // Future<String> downloadFile(String fileName) async {
+  //   HttpClient httpClient = new HttpClient();
+  //   File file;
+  //   String filePath = '';
+  //   String myUrl = '';
+  //   String url = link.Link.proposal;
+  //   String dir = (await getDownloadsDirectory()).path;
+
+  //   try {
+  //     myUrl = url + fileName;
+  //     var request = await httpClient.getUrl(Uri.parse(myUrl));
+  //     var response = await request.close();
+  //     if (response.statusCode == 200) {
+  //       var bytes = await consolidateHttpClientResponseBytes(response);
+  //       filePath = '$dir/$fileName';
+  //       file = File(filePath);
+  //       await file.writeAsBytes(bytes);
+  //     } else
+  //       filePath = 'Error code: ' + response.statusCode.toString();
+  //   } catch (ex) {
+  //     filePath = 'Can not fetch url';
+  //   }
+
+  //   return filePath;
+  // }
+
+  // Future<File> _downloadFile(String filename) async {
+  //   // http.Client client = new http.Client();
+  //   // var req = await client.get(link.Link.proposal + filename);
+  //   // var bytes = req.bodyBytes;
+  //   // String dir = (await getDownloadsDirectory()).path;
+  //   // File file = new File('$dir/$filename');
+  //   // await file.writeAsBytes(bytes);
+  //   // print("sukses");
+  //   // return file;
+
   //   final taskId = await FlutterDownloader.enqueue(
-  //     url: 'your download link',
-  //     savedDir: 'the path of directory where you want to save downloaded files',
+  //     url: link.Link.proposal + filename,
+  //     savedDir: (await getDownloadsDirectory()).path,
   //     showNotification:
   //         true, // show download progress in status bar (for Android)
   //     openFileFromNotification:
   //         true, // click on notification to open downloaded file (for Android)
   //   );
   // }
-
-  Future<File> _downloadFile(String filename) async {
-    http.Client client = new http.Client();
-    var req = await client
-        .get(link.Link.proposal + "downloadProposal.php?file=$filename");
-    var bytes = req.bodyBytes;
-    String dir = (await getApplicationDocumentsDirectory()).path;
-    File file = new File('$dir/$filename');
-    await file.writeAsBytes(bytes);
-    return file;
-  }
 
   var _boxDecor = BoxDecoration(
       // color: colPrimary,
@@ -185,6 +246,19 @@ class _AccJudulState extends State<AccJudul> {
     popPage(context);
   }
 
+  Future initial() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await FlutterDownloader.initialize(
+        debug: true // optional: set false to disable printing logs to console
+        );
+  }
+
+  @override
+  void initState() {
+    initial();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -213,15 +287,23 @@ class _AccJudulState extends State<AccJudul> {
                         "Nama Mahasiswa", Icons.person),
                     _buildListTile(
                         widget.data['judul'], "Judul Proposal", Icons.title),
-                    _buildListTile(
-                      widget.data['file'],
-                      "File Document",
-                      Icons.note_add,
-                      trailing: IconButton(
-                        icon: Icon(Icons.file_download),
-                        onPressed: () => _downloadFile(widget.data['file']),
-                      ),
-                    ),
+                    // _buildListTile(
+                    //   widget.data['file'],
+                    //   "File Document",
+                    //   Icons.note_add,
+                    //   trailing: IconButton(
+                    //     icon: Icon(Icons.file_download),
+                    //     onPressed: () => pushPage(context, TesDownload()),
+                    //   ),
+                    // ),
+                    // ListTile(
+                    //   title: Text(widget.data['file']),
+                    //   // subtitle: Text("File Document"),
+                    //   trailing: IconButton(
+                    //     icon: Icon(Icons.file_download),
+                    //     onPressed: () => pushPage(context, TesDownload()),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
