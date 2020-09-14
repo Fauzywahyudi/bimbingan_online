@@ -2,7 +2,10 @@ import 'dart:async';
 
 import 'package:bimbingan_online/models/shared_preferenced.dart';
 import 'package:bimbingan_online/providers/mahasiswa_bimbingan_provider.dart';
+import 'package:bimbingan_online/utils/assets.dart';
+import 'package:bimbingan_online/views/dosen/pages/fitur_kaprodi/mahasiswa/detail_mahasiswa.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MahasiswaBimbingan extends StatefulWidget {
   static const routeName = '/MahasiswaBimbinganDosen';
@@ -55,8 +58,17 @@ class _MahasiswaBimbinganState extends State<MahasiswaBimbingan> {
                       itemBuilder: (context, index) {
                         return ListTile(
                           leading: Icon(Icons.person),
+                          onTap: () async {
+                            await pushPage(
+                              context,
+                              DetailMahasiswa(data: snapshot.data[index]),
+                            );
+                            handleRefresh();
+                          },
                           title: Text(
                             snapshot.data[index]['nama_mahasiswa'],
+                            style: GoogleFonts.mcLaren(
+                                fontWeight: FontWeight.bold),
                           ),
                           subtitle: Text(
                             "NIM : " + snapshot.data[index]['nim_mahasiswa'],
