@@ -15,6 +15,7 @@ class _AddProposalState extends State<AddProposal> {
   // TextEditingController controllerStock = new TextEditingController();
   DataShared _dataShared = DataShared();
 
+  // ignore: non_constant_identifier_names
   void AddProposal() async {
     var url = link.Link.mahasiswa + "tambahProposal.php";
     // final response = await http.get(link.Link.mahasiswa + "getProposal.php");
