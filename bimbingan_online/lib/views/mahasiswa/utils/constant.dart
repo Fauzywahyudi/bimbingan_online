@@ -102,7 +102,7 @@ List<ProfileMenu> profileMenuList = [
     icon: Icons.message,
   ),
   ProfileMenu(
-    page: "/NotifMahasiswa",
+    page: "/NotifikasiDosen",
     title: 'Notifikasi',
     subTitle: 'Notifikasi informasi bimbingan',
     iconColor: profile_info_notification,
