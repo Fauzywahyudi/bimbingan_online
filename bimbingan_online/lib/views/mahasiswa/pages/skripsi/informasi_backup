@@ -1,0 +1,109 @@
+import 'dart:convert';
+
+import 'package:bimbingan_online/models/shared_preferenced.dart';
+import 'package:bimbingan_online/utils/link.dart' as link;
+import 'package:flutter/material.dart';
+// import '../pengajuanProposal/tambah_proposal.dart';
+import 'package:http/http.dart' as http;
+// import '../pengajuanProposal/detail_proposal.dart';
+import './detail_informasi.dart';
+
+class InformasiSkripsi extends StatefulWidget {
+  static const routeName = '/InformasiSkripsi';
+  @override
+  _InformasiSkripsiState createState() => new _InformasiSkripsiState();
+}
+
+class _InformasiSkripsiState extends State<InformasiSkripsi> {
+  Future<List> getInformasi() async {
+    DataShared _dataShared = DataShared();
+    int id = await _dataShared.getId();
+    final response = await http.post(link.Link.mahasiswa + "getInformasi.php",
+        body: {"id": id.toString()});
+
+    return json.decode(response.body);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text("Informasi Skripsi"),
+      ),
+      // floatingActionButton: new FloatingActionButton(
+      //   child: new Icon(Icons.add),
+      //   onPressed: () => Navigator.of(context).push(new MaterialPageRoute(
+      //     builder: (BuildContext context) => new AddProposal(),
+      //   )),
+      // ),
+      body: new FutureBuilder<List>(
+        future: getInformasi(),
+        builder: (context, snapshoot) {
+          if (snapshoot.hasError) print(snapshoot.error);
+          return snapshoot.hasData
+              ? new ItemList(
+                  list: snapshoot.data,
+                )
+              : new Center(
+                  child: new CircularProgressIndicator(),
+                );
+        },
+      ),
+    );
+  }
+}
+
+class ItemList extends StatelessWidget {
+  final List list;
+  ItemList({this.list});
+  @override
+  Widget build(BuildContext context) {
+    return new ListView.builder(
+      itemCount: list == null ? 0 : list.length,
+      itemBuilder: (context, i) {
+        return new Container(
+          padding: const EdgeInsets.all(10.0),
+          child: new GestureDetector(
+            onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                builder: (BuildContext context) => new DetailInformasi(
+                      // list: list,
+                      // index: i,
+                      listData: list[i],
+                    ))),
+            child: new Column(
+              children: <Widget>[
+                ListTile(
+                  title: new Text(list[i]['nama_dosen']),
+                  leading: list[i]['status'] == "Proses"
+                      ? Icon(Icons.schedule)
+                      : list[i]['status'] == "Ditolak"
+                          ? Icon(Icons.close)
+                          : Icon(Icons.check),
+                  subtitle: new Text("Dosen Pembimbing"),
+                ),
+                // ListTile(
+                //   title: new Text(list[i]['nama_dosen']),
+                //   leading: list[i]['status'] == "Proses"
+                //       ? Icon(Icons.schedule)
+                //       : list[i]['status'] == "Ditolak"
+                //           ? Icon(Icons.close)
+                //           : Icon(Icons.check),
+                //   subtitle: new Text("Pembimbing 1"),
+                // ),
+                ListTile(
+                  title: new Text(list[i]['bab']),
+                  leading: list[i]['status'] == "Proses"
+                      ? Icon(Icons.schedule)
+                      : list[i]['status'] == "Ditolak"
+                          ? Icon(Icons.close)
+                          : Icon(Icons.check),
+                  subtitle: new Text("Status : ${list[i]['status']}"),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
