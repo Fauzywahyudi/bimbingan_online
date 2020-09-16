@@ -1,3 +1,5 @@
+import 'package:bimbingan_online/file_pick.dart';
+
 import 'views/dosen/pages/fitur_kaprodi/kompre/kompre_page.dart';
 import 'views/dosen/pages/menu_dosen/daftar_bimbingan/tambah_jadwal_bimbingan.dart';
 import 'views/dosen/pages/menu_dosen/mahasiswa_bimbingan/mahasiswa_bimbingan.dart';
