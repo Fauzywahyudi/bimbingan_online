@@ -2,9 +2,9 @@
 require '../koneksi.php';
 $respons = array();
 $data = array();
-$id_dosen = $_GET['id_dosen'];
+$id_bimbingan = $_GET['id_bimbingan'];
 
-$sql = $kon->query("SELECT * FROM `jadwal_bimbingan` WHERE id_dosen='$id_dosen'");
+$sql = $kon->query("SELECT * FROM `bahan_bimbingan` WHERE id_bimbingan='$id_bimbingan'");
 while ($fetchData = $sql->fetch_array()) {
     $data[] = $fetchData;
 }

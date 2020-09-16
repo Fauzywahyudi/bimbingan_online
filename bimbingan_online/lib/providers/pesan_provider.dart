@@ -25,6 +25,24 @@ class PesanProvider {
     return data;
   }
 
+  Future<List> getBahanByIdBimbingan(
+      BuildContext context, int idBimbingan) async {
+    final result =
+        await http.post(link.Link.mahasiswa + "getBahanPesan.php", body: {
+      "id_bimbingan": idBimbingan.toString(),
+    });
+    final response = await json.decode(result.body);
+    List data;
+    int value = response['value'];
+    String pesan = response['message'];
+    if (value == 1) {
+      data = json.decode(response['data']);
+    } else {
+      messageDanger(context, pesan);
+    }
+    return data;
+  }
+
   // Future<List> getPesanById(BuildContext context, int id) async {
   //   final result =
   //       await http.post(link.Link.kaprodi + "getPesanById.php", body: {
