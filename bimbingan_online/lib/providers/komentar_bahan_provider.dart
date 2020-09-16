@@ -40,6 +40,24 @@ class KomentarBahanProvider {
     }
   }
 
+  Future addKomentarMahasiswa(BuildContext context, Komentar komentar) async {
+    final result = await http
+        .post(link.Link.mahasiswa + "addKomentarMahasiswa.php", body: {
+      "id_bahan": komentar.idBahan.toString(),
+      "isi_pesan": komentar.isiPesan,
+      "sender": komentar.sender,
+      "receiver": komentar.receiver,
+    });
+    final response = await json.decode(result.body);
+    int value = response['value'];
+    String pesan = response['message'];
+    if (value == 1) {
+      // messageSuccess(context, pesan);
+    } else {
+      messageDanger(context, pesan);
+    }
+  }
+
   // Future<List> getProposalById(BuildContext context, int id) async {
   //   final result =
   //       await http.post(link.Link.kaprodi + "getProposalById.php", body: {

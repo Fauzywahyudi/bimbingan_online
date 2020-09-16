@@ -3,6 +3,7 @@ import 'package:bimbingan_online/models/shared_preferenced.dart';
 import 'package:bimbingan_online/providers/jadwal_bimbingan_provider.dart';
 import 'package:bimbingan_online/providers/mahasiswa_provider.dart';
 import 'package:bimbingan_online/utils/assets.dart';
+import 'package:bimbingan_online/views/mahasiswa/pages/pesan_mahasiswa/pesan_perbahan.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -126,11 +127,13 @@ class _PesanMahasiswaState extends State<PesanMahasiswa>
                           ],
                         ),
                         onTap: () async {
-                          // await pushPage(
-                          //   context,
-                          //   DetailDosen(data: snapshot.data[index]),
-                          // );
-                          // handleRefresh();
+                          await pushPage(
+                            context,
+                            PesanPerBahan(
+                              data: snapshot.data[index],
+                            ),
+                          );
+                          handleRefresh();
                         },
                       );
                     },
