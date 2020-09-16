@@ -1,4 +1,5 @@
 import 'package:bimbingan_online/file_pick.dart';
+import 'package:bimbingan_online/views/mahasiswa/pages/pesan_mahasiswa/pesan_mahasiswa.dart';
 
 import 'views/dosen/pages/fitur_kaprodi/kompre/kompre_page.dart';
 import 'views/dosen/pages/menu_dosen/daftar_bimbingan/tambah_jadwal_bimbingan.dart';
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
         DaftarProposal.routeName: (context) => DaftarProposal(),
         ProgresBimbingan.routeName: (context) => ProgresBimbingan(),
         InformasiSkripsi.routeName: (context) => InformasiSkripsi(),
+        PesanMahasiswa.routeName: (context) => PesanMahasiswa(),
       },
       builder: BotToastInit(),
       theme: ThemeData(

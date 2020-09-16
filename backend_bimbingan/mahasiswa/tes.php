@@ -1,26 +1,21 @@
 <?php
 require '../koneksi.php';
-$response = array();
+$respons = array();
 $data = array();
-$id_pembimbing = $_GET['id_pembimbing'];
-// $status = $_POST['status'];
+$id_dosen = $_GET['id_dosen'];
 
-$id_mahasiswa = $_GET['id_mahasiswa'];
-// $status = $_POST['status'];
-
-$sql = $kon->query("SELECT * FROM bahan_bimbingan as a INNER JOIN mahasiswa as b ON a.id_mahasiswa=b.id_mahasiswa WHERE a.id_pembimbing='$id_pembimbing' GROUP BY a.id_mahasiswa");
-
+$sql = $kon->query("SELECT * FROM `jadwal_bimbingan` WHERE id_dosen='$id_dosen'");
 while ($fetchData = $sql->fetch_array()) {
     $data[] = $fetchData;
 }
 
 if (isset($data)) {
     $response['value'] = 1;
-    $response['message'] = "Tambah jadwal berhasil";
+    $response['message'] = "Load data berhasil";
     $response['data'] = json_encode($data);
     echo json_encode($response);
 } else {
     $response['value'] = 0;
-    $response['message'] = "Tambah jadwal gagal";
+    $response['message'] = "Load data gagal";
     echo json_encode($response);
 }

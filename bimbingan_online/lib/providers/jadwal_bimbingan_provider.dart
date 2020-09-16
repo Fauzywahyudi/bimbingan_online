@@ -24,22 +24,22 @@ class JadwalBimbinganProvider {
     return data;
   }
 
-  // Future<List> getProposalById(BuildContext context, int id) async {
-  //   final result =
-  //       await http.post(link.Link.kaprodi + "getProposalById.php", body: {
-  //     "id": id.toString(),
-  //   });
-  //   final response = await json.decode(result.body);
-  //   List data;
-  //   int value = response['value'];
-  //   String pesan = response['message'];
-  //   if (value == 1) {
-  //     data = json.decode(response['data']);
-  //   } else {
-  //     messageDanger(context, pesan);
-  //   }
-  //   return data;
-  // }
+  Future<List> getJadwalByDosen(BuildContext context, int idDosen) async {
+    final result = await http
+        .post(link.Link.mahasiswa + "getJadwalBimbinganByDosen.php", body: {
+      "id_dosen": idDosen.toString(),
+    });
+    final response = await json.decode(result.body);
+    List data;
+    int value = response['value'];
+    String pesan = response['message'];
+    if (value == 1) {
+      data = json.decode(response['data']);
+    } else {
+      messageDanger(context, pesan);
+    }
+    return data;
+  }
 
   Future addJadwalBimbingan(BuildContext context, int idDosen,
       String jadwalMulai, jadwalSelesai, keterangan) async {
