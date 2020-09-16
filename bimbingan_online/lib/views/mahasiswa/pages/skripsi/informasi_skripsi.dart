@@ -156,9 +156,13 @@ class InformasiSkripsiState extends State<InformasiSkripsi>
                     ))),
             child: new Card(
               child: new ListTile(
-                title: new Text(list[i]['judul']),
-                leading: Icon(Icons.title),
-                subtitle: new Text("Judul Skripsi"),
+                title: new Text("Bab " + list[i]['bab']),
+                leading: list[i]['status_bahan'] == "Belum dibaca"
+                    ? Icon(Icons.schedule)
+                    : list[i]['status_bahan'] == "Belum dibaca"
+                        ? Icon(Icons.check)
+                        : Icon(Icons.refresh),
+                subtitle: new Text(list[i]['status_bahan']),
               ),
             ),
           ),

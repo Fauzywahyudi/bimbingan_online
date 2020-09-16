@@ -26,12 +26,7 @@ class _AddProposalState extends State<AddProposal> {
   String progress;
   Dio dio = new Dio();
 
-<<<<<<< HEAD
   Future<bool> upload(BuildContext context, String fileName) async {
-=======
-  // ignore: non_constant_identifier_names
-  void AddProposal() async {
->>>>>>> issue70
     var url = link.Link.mahasiswa + "tambahProposal.php";
     int id = await _dataShared.getId();
     final result = await http.post(url, body: {
