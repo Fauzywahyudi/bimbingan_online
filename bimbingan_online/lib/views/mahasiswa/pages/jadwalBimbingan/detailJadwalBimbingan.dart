@@ -20,7 +20,9 @@ class _DetailJadwalState extends State<DetailJadwal> {
           child: new Icon(Icons.add),
           onPressed: () async {
             await Navigator.of(context).push(new MaterialPageRoute(
-              builder: (BuildContext context) => new AddBahan(),
+              builder: (BuildContext context) => new AddBahan(
+                data: widget.listData,
+              ),
             ));
             // handleRefresh();
           }),
@@ -29,14 +31,6 @@ class _DetailJadwalState extends State<DetailJadwal> {
         padding: const EdgeInsets.all(5.0),
         child: new Column(
           children: <Widget>[
-            // ListTile(
-            //   title: new Text(
-            //     "Bimbingan ke",
-            //     style: new TextStyle(fontSize: 20.0),
-            //   ),
-            //   subtitle: new Text("Bimbingan Ke-${}"),
-            //   leading: new Icon(Icons.title),
-            // ),
             ListTile(
               title: new Text(
                 "${widget.listData["keterangan"]}",
