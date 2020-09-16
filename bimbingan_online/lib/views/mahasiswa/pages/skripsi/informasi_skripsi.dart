@@ -121,36 +121,33 @@ class InformasiSkripsiState extends State<InformasiSkripsi>
       itemBuilder: (context, i) {
         if (i == 0) {
           return new Container(
-            // padding: const EdgeInsets.all(10.0),
-            child: new GestureDetector(
-              onTap: () => Navigator.of(context).push(new MaterialPageRoute(
-                  builder: (BuildContext context) => new DetailJudul(
-                        listData: list[i],
-                      ))),
-              child: new Card(
-                child: new ListTile(
-                  title: new Text(list[i]['judul']),
-                  leading: Icon(Icons.title),
-                  subtitle: new Text("Judul Skripsi"),
-                ),
+            child: new Card(
+              child: new ExpansionTile(
+                title: new Text(list[i]['judul']),
+                leading: Icon(Icons.title),
+                subtitle: new Text("Judul Skripsi"),
+                children: [
+                  ListTile(
+                    leading: Icon(Icons.schedule),
+                    title: Text(
+                      formatJam(list[i]['tgl_acc']) +
+                          " WIB " +
+                          formatTanggal(list[i]['tgl_acc']),
+                    ),
+                    subtitle: Text("Tanggal Acc"),
+                  ),
+                ],
               ),
             ),
           );
         } else {
           return new Container(
             // padding: const EdgeInsets.all(10.0),
-            child: new GestureDetector(
-              onTap: () => Navigator.of(context).push(new MaterialPageRoute(
-                  builder: (BuildContext context) => new DetailJudul(
-                        listData: list[i],
-                      ))),
-              child: new Card(
-                child: new ListTile(
-                  title:
-                      new Text(list[i]['nama_dosen'] + " " + list[i]['gelar']),
-                  leading: Icon(Icons.person),
-                  subtitle: new Text("Pembimbing $i"),
-                ),
+            child: new Card(
+              child: new ListTile(
+                title: new Text(list[i]['nama_dosen'] + " " + list[i]['gelar']),
+                leading: Icon(Icons.person),
+                subtitle: new Text("Pembimbing $i"),
               ),
             ),
           );
@@ -164,24 +161,15 @@ class InformasiSkripsiState extends State<InformasiSkripsi>
       itemCount: list == null ? 0 : list.length,
       itemBuilder: (context, i) {
         return new Container(
-          padding: const EdgeInsets.all(10.0),
-          child: new GestureDetector(
-            onTap: () => Navigator.of(context).push(new MaterialPageRoute(
-                builder: (BuildContext context) => new DetailJudul(
-                      // list: list,
-                      // index: i,
-                      listData: list[i],
-                    ))),
-            child: new Card(
-              child: new ListTile(
-                title: new Text("Bab " + list[i]['bab']),
-                leading: list[i]['status_bahan'] == "Belum dibaca"
-                    ? Icon(Icons.schedule)
-                    : list[i]['status_bahan'] == "Belum dibaca"
-                        ? Icon(Icons.check)
-                        : Icon(Icons.refresh),
-                subtitle: new Text(list[i]['status_bahan']),
-              ),
+          child: new Card(
+            child: new ListTile(
+              title: new Text("Bab " + list[i]['bab']),
+              leading: list[i]['status_bahan'] == "Belum dibaca"
+                  ? Icon(Icons.schedule)
+                  : list[i]['status_bahan'] == "Acc"
+                      ? Icon(Icons.check)
+                      : Icon(Icons.refresh),
+              subtitle: new Text(list[i]['status_bahan']),
             ),
           ),
         );
@@ -194,20 +182,32 @@ class InformasiSkripsiState extends State<InformasiSkripsi>
       itemCount: list == null ? 0 : list.length,
       itemBuilder: (context, i) {
         return new Container(
-          padding: const EdgeInsets.all(10.0),
-          child: new GestureDetector(
-            onTap: () => Navigator.of(context).push(new MaterialPageRoute(
-                builder: (BuildContext context) => new DetailJudul(
-                      // list: list,
-                      // index: i,
-                      listData: list[i],
-                    ))),
-            child: new Card(
-              child: new ListTile(
-                title: new Text(list[i]['judul']),
-                leading: Icon(Icons.title),
-                subtitle: new Text("Judul Skripsi"),
+          child: new Card(
+            child: new ExpansionTile(
+              title: new Text(list[i]['tipe_jadwal']),
+              leading: Icon(Icons.schedule),
+              subtitle: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                      "${formatJam(list[i]['jadwal_mulai'])} - ${formatJam(list[i]['jadwal_selesai'])} WIB"),
+                  Expanded(child: Container()),
+                  Text("${formatTanggal(list[i]['jadwal_selesai'])}"),
+                ],
               ),
+              children: [
+                ListTile(
+                  title:
+                      Text(list[i]['penguji'].toString().replaceAll("|", "\n")),
+                  subtitle: Text("Penguji"),
+                  leading: Icon(Icons.person),
+                ),
+                ListTile(
+                  title: Text(list[i]['keterangan'].toString()),
+                  subtitle: Text("Keterangan"),
+                  leading: Icon(Icons.info),
+                )
+              ],
             ),
           ),
         );
