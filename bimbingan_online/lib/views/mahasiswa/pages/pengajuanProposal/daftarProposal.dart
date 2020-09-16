@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:bimbingan_online/models/shared_preferenced.dart';
@@ -23,6 +24,15 @@ class _DaftarProposalState extends State<DaftarProposal> {
     return json.decode(response.body);
   }
 
+  Future<Null> handleRefresh() async {
+    Completer<Null> completer = new Completer<Null>();
+    new Future.delayed(new Duration(milliseconds: 500)).then((_) {
+      completer.complete();
+      setState(() {});
+    });
+    return completer.future;
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -30,11 +40,13 @@ class _DaftarProposalState extends State<DaftarProposal> {
         title: new Text("Daftar Proposal"),
       ),
       floatingActionButton: new FloatingActionButton(
-        child: new Icon(Icons.add),
-        onPressed: () => Navigator.of(context).push(new MaterialPageRoute(
-          builder: (BuildContext context) => new AddProposal(),
-        )),
-      ),
+          child: new Icon(Icons.add),
+          onPressed: () async {
+            await Navigator.of(context).push(new MaterialPageRoute(
+              builder: (BuildContext context) => new AddProposal(),
+            ));
+            handleRefresh();
+          }),
       body: new FutureBuilder<List>(
         future: getProposal(),
         builder: (context, snapshoot) {
@@ -61,7 +73,7 @@ class ItemList extends StatelessWidget {
       itemCount: list == null ? 0 : list.length,
       itemBuilder: (context, i) {
         return new Container(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: new GestureDetector(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                 builder: (BuildContext context) => new Detail(

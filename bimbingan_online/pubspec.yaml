@@ -46,7 +46,8 @@ dependencies:
   path_provider: ^1.6.14
   dio: any
   permission_handler: ^5.0.1+1
-  webview_flutter: ^0.3.22+1
+  file_picker: ^2.0.0
+  path: ^1.7.0
 
 dev_dependencies:
   flutter_test:
