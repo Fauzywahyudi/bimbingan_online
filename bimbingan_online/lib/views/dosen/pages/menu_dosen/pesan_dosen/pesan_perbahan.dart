@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bimbingan_online/models/shared_preferenced.dart';
 import 'package:bimbingan_online/providers/pesan_provider.dart';
 import 'package:bimbingan_online/utils/assets.dart';
+import 'package:bimbingan_online/views/dosen/pages/menu_dosen/pesan_dosen/view_chat.dart';
 import 'package:flutter/material.dart';
 
 class PesanPerBahan extends StatefulWidget {
@@ -65,7 +66,9 @@ class _PesanPerBahanState extends State<PesanPerBahan> {
         itemCount: snapshot.data.length,
         itemBuilder: (context, index) {
           return ListTile(
-              onTap: () {},
+              onTap: () {
+                pushPage(context, ViewChatPesan(data: snapshot.data[index]));
+              },
               leading: Icon(Icons.calendar_today),
               subtitle: Text(""),
               title: Text("Bimbingan ke-" + (index + 1).toString()));
