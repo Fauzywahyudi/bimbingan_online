@@ -42,7 +42,7 @@ function Progres()
     $data = array();
     $id_mahasiswa = $_POST['id_mahasiswa'];
 
-    $sql = $kon->query("SELECT * FROM bahan_bimbingan WHERE id_mahasiswa='$id_mahasiswa' ORDER BY bab DESC LIMIT 1");
+    $sql = $kon->query("SELECT * FROM bahan_bimbingan WHERE id_mahasiswa='$id_mahasiswa' ORDER BY bab");
     while ($fetchData = $sql->fetch_array()) {
         $data[] = $fetchData;
     }
