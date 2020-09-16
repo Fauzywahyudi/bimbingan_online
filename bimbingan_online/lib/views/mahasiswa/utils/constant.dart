@@ -88,7 +88,7 @@ List<ProfileMenu> profileMenuList = [
     icon: Icons.schedule,
   ),
   ProfileMenu(
-    page: "/ProgresBimbingan",
+    page: "/JadwalBimbingan",
     title: 'Jadwal Bimbingan',
     subTitle: 'Daftar jadwal bimbingan',
     iconColor: profile_info_privacy,

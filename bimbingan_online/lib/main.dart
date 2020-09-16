@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'views/dosen/pages/menu_dosen/daftar_bimbingan/daftar_bimbingan.dart';
 import 'views/dosen/pages/menu_dosen/notifikasi_dosen/notifikasi_dosen.dart';
 import 'views/dosen/pages/menu_dosen/pesan_dosen/pesan_dosen.dart';
-import 'views/mahasiswa/pages/jadwalBimbingan/ProgresBimbingan.dart';
+import 'views/mahasiswa/pages/jadwalBimbingan/jadwalBimbingan.dart';
 import 'views/mahasiswa/pages/pengajuanProposal/daftarProposal.dart';
 import 'views/mahasiswa/pages/skripsi/informasi_skripsi.dart';
 
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
 
         //mahasiswa
         DaftarProposal.routeName: (context) => DaftarProposal(),
-        ProgresBimbingan.routeName: (context) => ProgresBimbingan(),
+        JadwalBimbingan.routeName: (context) => JadwalBimbingan(),
         InformasiSkripsi.routeName: (context) => InformasiSkripsi(),
         PesanMahasiswa.routeName: (context) => PesanMahasiswa(),
       },

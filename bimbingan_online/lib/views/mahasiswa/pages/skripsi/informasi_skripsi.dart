@@ -1,12 +1,12 @@
 import 'dart:async';
-import 'dart:convert';
+// import 'dart:convert';
 // import 'dart:convert';
 
 // import 'package:bimbingan_online/models/page_aktor.dart';
 import 'package:bimbingan_online/models/shared_preferenced.dart';
 import 'package:bimbingan_online/providers/informasi_provider.dart';
 import 'package:bimbingan_online/utils/assets.dart';
-import 'package:bimbingan_online/views/mahasiswa/pages/skripsi/detail_judul.dart';
+// import 'package:bimbingan_online/views/mahasiswa/pages/skripsi/detail_judul.dart';
 // import 'package:bimbingan_online/views/dosen/pages/fitur_kaprodi/dosen/comfirm_dosen.dart';
 // import 'package:bimbingan_online/views/dosen/pages/fitur_kaprodi/dosen/detail_dosen.dart';
 // import 'package:bimbingan_online/views/dosen/pages/fitur_kaprodi/mahasiswa/confirm_mahasiswa.dart';
