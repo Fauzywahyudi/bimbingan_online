@@ -119,24 +119,42 @@ class InformasiSkripsiState extends State<InformasiSkripsi>
     return new ListView.builder(
       itemCount: list == null ? 0 : list.length,
       itemBuilder: (context, i) {
-        return new Container(
-          padding: const EdgeInsets.all(10.0),
-          child: new GestureDetector(
-            onTap: () => Navigator.of(context).push(new MaterialPageRoute(
-                builder: (BuildContext context) => new DetailJudul(
-                      // list: list,
-                      // index: i,
-                      listData: list[i],
-                    ))),
-            child: new Card(
-              child: new ListTile(
-                title: new Text(list[i]['judul']),
-                leading: Icon(Icons.title),
-                subtitle: new Text("Judul Skripsi"),
+        if (i == 0) {
+          return new Container(
+            // padding: const EdgeInsets.all(10.0),
+            child: new GestureDetector(
+              onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (BuildContext context) => new DetailJudul(
+                        listData: list[i],
+                      ))),
+              child: new Card(
+                child: new ListTile(
+                  title: new Text(list[i]['judul']),
+                  leading: Icon(Icons.title),
+                  subtitle: new Text("Judul Skripsi"),
+                ),
               ),
             ),
-          ),
-        );
+          );
+        } else {
+          return new Container(
+            // padding: const EdgeInsets.all(10.0),
+            child: new GestureDetector(
+              onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (BuildContext context) => new DetailJudul(
+                        listData: list[i],
+                      ))),
+              child: new Card(
+                child: new ListTile(
+                  title:
+                      new Text(list[i]['nama_dosen'] + " " + list[i]['gelar']),
+                  leading: Icon(Icons.person),
+                  subtitle: new Text("Pembimbing $i"),
+                ),
+              ),
+            ),
+          );
+        }
       },
     );
   }
