@@ -70,9 +70,14 @@ class _PesanPerBahanState extends State<PesanPerBahan> {
                         idDosen: int.parse(widget.data['id_dosen']),
                         data: snapshot.data[index]));
               },
-              leading: Icon(Icons.calendar_today),
-              subtitle: Text(""),
-              title: Text("Bimbingan ke-" + (index + 1).toString()));
+              leading: snapshot.data[index]['status_bahan'] == "Belum dibaca"
+                  ? Icon(Icons.schedule)
+                  : snapshot.data[index]['status_bahan'] == "Acc"
+                      ? Icon(Icons.check_box)
+                      : Icon(Icons.refresh),
+              title: Text("Bab " + snapshot.data[index]['bab']),
+              subtitle:
+                  Text("Status :" + snapshot.data[index]['status_bahan']));
         },
       ),
     );
