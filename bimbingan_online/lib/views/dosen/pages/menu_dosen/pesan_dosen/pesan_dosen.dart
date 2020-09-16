@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:bimbingan_online/models/shared_preferenced.dart';
 import 'package:bimbingan_online/providers/pesan_provider.dart';
 import 'package:bimbingan_online/utils/assets.dart';
+import 'package:bimbingan_online/views/dosen/pages/menu_dosen/pesan_dosen/pesan_perbahan.dart';
 import 'package:flutter/material.dart';
 
 class PesanDosen extends StatefulWidget {
@@ -63,7 +64,11 @@ class _PesanDosenState extends State<PesanDosen> {
         itemBuilder: (context, index) {
           return ListTile(
             onTap: () {
-              // pushPage(context, PesanPer)
+              pushPage(
+                  context,
+                  PesanPerBahan(
+                    data: snapshot.data[index],
+                  ));
             },
             leading: Icon(Icons.person),
             title: Text(snapshot.data[index]['nama_mahasiswa']),
