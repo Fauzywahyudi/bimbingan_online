@@ -160,6 +160,7 @@ class _LoginState extends State<Login> {
                           borderRadius: BorderRadius.all(Radius.circular(40))),
                       child: TextField(
                         controller: _tecNim,
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.person,
